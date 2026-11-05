@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="fr-BE">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bolt Belgique — Véhicules éligibles</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap');
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--green:#2A9C64;--dark:#1A1A2E;--mid:#6B7280;--light:#F5F5F7;--border:#E5E7EB;--white:#fff}
+  body{font-family:"DM Sans",sans-serif;background:var(--light);color:var(--dark);min-height:100vh}
+  header{background:var(--white);border-bottom:1px solid var(--border);padding:20px 40px;display:flex;align-items:center;gap:16px}
+  .logo{display:block;height:28px;width:auto}
+  .header-sub{font-size:14px;color:var(--mid);border-left:1px solid var(--border);padding-left:16px;margin-left:4px}
+  .container{max-width:1100px;margin:0 auto;padding:32px 24px}
+  .page-sub{font-size:14px;color:var(--mid);margin-bottom:24px}
+  .lang-switch{margin-left:auto;display:flex;gap:4px}
+  .lang-btn{padding:6px 10px;border:1.5px solid var(--border);background:var(--white);border-radius:8px;font-family:"DM Sans",sans-serif;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--mid);cursor:pointer;transition:all .15s}
+  .lang-btn:hover{color:var(--dark);border-color:#aaa}
+  .lang-btn.active{background:var(--dark);border-color:var(--dark);color:var(--white)}
+  .lang-btn:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+  .notice{background:var(--white);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:10px;padding:12px 14px;font-size:14px;line-height:1.5;color:var(--dark);margin-bottom:20px}
+  .notice:empty{display:none}
+  .region-switch{display:inline-flex;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:4px;gap:4px;margin-bottom:16px}
+  .region-btn{padding:9px 18px;border:0;border-radius:9px;background:transparent;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:500;color:var(--mid);cursor:pointer;transition:all .15s;white-space:nowrap}
+  .region-btn:hover{color:var(--dark)}
+  .region-btn.active{background:var(--dark);color:var(--white)}
+  .region-btn:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+  .region-note{font-size:13px;color:var(--mid);margin-bottom:20px}
+  .region-note:empty{display:none}
+  .search-wrap{position:relative;margin-bottom:24px}
+  .search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--mid)}
+  #searchInput{width:100%;padding:13px 16px 13px 44px;border:1.5px solid var(--border);border-radius:12px;font-family:"DM Sans",sans-serif;font-size:15px;background:var(--white);outline:none;transition:border-color .2s}
+  #searchInput:focus{border-color:var(--green)}
+  .cat-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+  .cat-tab{padding:8px 16px;border-radius:40px;border:1.5px solid var(--border);background:var(--white);font-family:"DM Sans",sans-serif;font-size:13px;font-weight:500;color:var(--mid);cursor:pointer;transition:all .15s;white-space:nowrap}
+  .cat-tab:hover{border-color:#aaa;color:var(--dark)}
+  .cat-tab.active{background:var(--green);border-color:var(--green);color:var(--white)}
+  .cat-tab .count{font-size:11px;opacity:.8;font-weight:400;margin-left:4px}
+  .cat-note{white-space:pre-line;background:var(--white);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.5;color:var(--dark);margin-bottom:16px}
+  .cat-note:empty{display:none}
+  .stats-line{font-size:13px;color:var(--mid);margin-bottom:16px}
+  .stats-line strong{color:var(--dark)}
+  .brands-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .brand-row{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .brand-header{padding:14px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .12s}
+  .brand-header:hover{background:#FAFAFA}
+  .brand-name{font-size:14px;font-weight:600;color:var(--dark)}
+  .brand-right{display:flex;align-items:center;gap:8px}
+  .brand-count{font-size:11px;color:var(--mid);background:var(--light);padding:2px 8px;border-radius:20px;white-space:nowrap}
+  .brand-chevron{color:#CBD5E0;font-size:11px;transition:transform .2s}
+  .brand-row.open .brand-chevron{transform:rotate(180deg)}
+  .models-list{display:none;border-top:1px solid var(--border);padding:8px 0}
+  .brand-row.open .models-list{display:block}
+  .model-item{padding:6px 16px;font-size:13px;color:var(--mid)}
+  .model-item:hover{background:var(--light);color:var(--dark)}
+  .search-results{display:none}
+  .search-result-group{margin-bottom:28px}
+  .result-group-title{font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  .result-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+  .result-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--dark)}
+  .result-brand{font-size:10px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+  .empty{text-align:center;padding:60px 20px;color:var(--mid);font-size:14px;line-height:1.8}
+  mark{background:#FFF3CD;border-radius:3px;padding:0 2px}
+  @media(max-width:768px){.brands-grid{grid-template-columns:repeat(2,1fr)}header{padding:16px 20px}.container{padding:20px 16px}}
+  @media(max-width:480px){.brands-grid{grid-template-columns:1fr}.region-switch{display:flex}.region-btn{flex:1;padding:9px 10px}}
+</style>
+</head>
+<body>
+<header>
+  <img class="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJAAAABUCAYAAABtP74aAAAWfmNhQlgAABZ+anVtYgAAAB5qdW1kYzJwYQARABCAAACqADibcQNjMnBhAAAAFlhqdW1iAAAAR2p1bWRjMm1hABEAEIAAAKoAOJtxA3VybjpjMnBhOmUyM2JjMDc0LTYxN2YtNDA5MS05NmRlLTE5MzRhOTU1ZGZjNAAAAAOTanVtYgAAAClqdW1kYzJhcwARABCAAACqADibcQNjMnBhLmFzc2VydGlvbnMAAAAAuGp1bWIAAABEanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5pbmdyZWRpZW50LnYzAAAAABhjMnNoedORhlNcvTyja4j8hT3fAAAAAGxjYm9yo2lkYzpmb3JtYXRpaW1hZ2UvcG5namluc3RhbmNlSUR4LHhtcDppaWQ6YTU2ODgzN2EtNDMyNC00OTQxLWFmOGEtZWI5ZjhmYzYyMDdjbHJlbGF0aW9uc2hpcGhwYXJlbnRPZgAAAeJqdW1iAAAAQWp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuYWN0aW9ucy52MgAAAAAYYzJzaBxpuxba9rnVT/QZ3UmgiVkAAAGZY2JvcqJnYWN0aW9uc4KiZmFjdGlvbmtjMnBhLm9wZW5lZGpwYXJhbWV0ZXJzoWtpbmdyZWRpZW50c4GiY3VybHgtc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5pbmdyZWRpZW50LnYzZGhhc2hYIBRA6xNI4nj/GLtBxy47lxsIIsSqXkDwQtbBHNj/VAwcpGZhY3Rpb254HWNvbS5hbnRocm9waWMuY2xhdWRlLnByb3ZpZGVkanBhcmFtZXRlcnOheB9jb20uYW50aHJvcGljLm9yaWdpbi1jb25maWRlbmNlZ3Vua25vd25rZGVzY3JpcHRpb254ZkNsYXVkZSBwcm92aWRlZCB0aGlzIGZpbGUgYXQgdGhlIHJlcXVlc3Qgb2YgYSB1c2VyIGFuZCBtYXkgaGF2ZSBjcmVhdGVkIG9yIG1vZGlmaWVkIHRoZSBmaWxlIGNvbnRlbnRzLm1zb2Z0d2FyZUFnZW50oWRuYW1lZkNsYXVkZXJhbGxBY3Rpb25zSW5jbHVkZWT1AAAAyGp1bWIAAABAanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5oYXNoLmRhdGEAAAAAGGMyc2grnnBMJztStl92d435sJvuAAAAgGNib3KlY2FsZ2ZzaGEyNTZjcGFkTQAAAAAAAAAAAAAAAABkaGFzaFggK3lTqmuTKh6Ll2zNEP+xwa+hOJHSFME48I7ElQPADZNkbmFtZW5qdW1iZiBtYW5pZmVzdGpleGNsdXNpb25zgaJlc3RhcnQYIWZsZW5ndGgZFooAAAI+anVtYgAAACdqdW1kYzJjbAARABCAAACqADibcQNjMnBhLmNsYWltLnYyAAAAAg9jYm9ypWNhbGdmc2hhMjU2aXNpZ25hdHVyZXhNc2VsZiNqdW1iZj0vYzJwYS91cm46YzJwYTplMjNiYzA3NC02MTdmLTQwOTEtOTZkZS0xOTM0YTk1NWRmYzQvYzJwYS5zaWduYXR1cmVqaW5zdGFuY2VJRHgseG1wOmlpZDpjZmZjNTMzMy0zYWQ5LTQ5NWMtYjg5NS1kYTcwNjFkNmQ5NGZyY3JlYXRlZF9hc3NlcnRpb25zg6JjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggFEDrE0jieP8Yu0HHLjuXGwgixKpeQPBC1sEc2P9UDByiY3VybHgqc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5hY3Rpb25zLnYyZGhhc2hYIBdDSJ5z3nWp7gr6q4RAOTwBWDXhxLuoSGJ1UuYf2765omN1cmx4KXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaGFzaC5kYXRhZGhhc2hYIGFk9+IZ49BUiU9cILSUEtwNis2pohDuurY5DYOrbutCdGNsYWltX2dlbmVyYXRvcl9pbmZvo2RuYW1lb0FudGhyb3BpYyBGaWxlc2d2ZXJzaW9uZTEuMC4wa3NwZWNWZXJzaW9uZTIuNC4wAAAQOGp1bWIAAAAoanVtZGMyY3MAEQAQgAAAqgA4m3EDYzJwYS5zaWduYXR1cmUAAAAQCGNib3LShFkCEqIBJhghWQIKMIICBjCCAY2gAwIBAgIUQOWgCu7COdC+uIP6BkIFPWdVEwAwCgYIKoZIzj0EAwMwSTEXMBUGA1UEChMOQW50aHJvcGljLCBQQkMxLjAsBgNVBAMTJUFudGhyb3BpYyBDb250ZW50IENyZWRlbnRpYWxzIFJvb3QgQ0EwHhcNMjYwODA3MTg0MzU2WhcNMjgwODA2MTk0MzU2WjBEMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEpMCcGA1UEAxMgQW50aHJvcGljIENsYXVkZSBDb250ZW50IFNpZ25pbmcwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASYegpry1AYBRTVNL1CpTlbROnY3dey+UrsF9C3phYrATN3ZHf93Mo8RQN0KOUuOn19P4oWNFWe5n2/She9N7eTo1gwVjAOBgNVHQ8BAf8EBAMCB4AwFQYDVR0lBA4wDAYKKwYBBAGD6F4CATAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFM5R4gSBTmRbI/jjxM+aPpzB11zCMAoGCCqGSM49BAMDA2cAMGQCMDFzHRSeAXrSy1WOzkbhPZ6Km2wGTmZ/2gK18k8BQGXyqz88Rdrz6CTX9flAnYNVxgIwcF9c3fVhqmJKpi+UhasNUMko69cyX6STPfta3Q8EjyzDjzoyrol46FP6VFHhvUcJoWNwYWRZDZ4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2WEAvDPpSqLNe6opgK3PwlRIiZSeoyU4DUpI9uOfa+2qklMyiHhvCt5pJb7Hx4TjyVLlOkdRhbw69VM4N4p/1veYNEb6RAQAAGnVJREFUeNrtfXtwXVd57+/71tr7nCPJduwQtwlOA6kTW0fk6UAyU4KcUmgbWkqBfSgE0sSW5BgSXpmWYQo9OuSWXuZe2kvTEFsPOwHCLdotUzIEAi0TizYhYTApaXQcB6chDeRlmsSWdB57r7W+/rH3kRXXDx29LFtaM3s0Hp8j7bXWb32P3/dY1N7f9RIIHgSzPghwAGog/BcYTxB4t2gezlXdg7u39FUAIBgKVDiSF5RKDksjGQJCb5E6AcZGYHgX3JHW54Ivd60xsVxIwpdxRnfaWvz0nq6B6yBFBs3PemoAy4hJzQWAQACBloHpDFK0HkRvQ2xR8+WnHXf03G0N3xEWtj06AaRCaJfQA4AgQEmGAYdSCpa7tq6Mx+N1xLiYiDcAcrGty1rW+jQwgbMeXC3+FgAgLNN8vaoGiYNgbgAkEIEAViAGIkJCBEWeOo8z3s1SjT6S39nzVYzbW8LC4D4Ui4zekiQLuHjHmqGP5VaOja91Ti4WpssIuNRW43aVUaezr5OlNRYSO0hsRYCYFGkhmPl+V57zswQQiAggJoICAImNM6NVA+u0ynrXUpv+UX6g6yaUSg4EQbHIiw00RUnm3LGj+/WnVSt7rbifcIv3JZXzPky+eiMpPl0iK2a8Zsx43bh67MQ6AYEAKIAYAjrVAHQ0XDERaQAwYzUjzq1QbZm/6djZ/dU1nw9yKJXcYgNReULtyCrK6LMhImY8sma8Zlw1tmISsBBIE6AB4hQ8J3Sc8E0iIg3rxIzWDOcy712xauV3L9r5x6ctRhABgCM2EhuXrA0UgTQIap7BQigWubPYqY+3B3phGI1EBGgzWo11W/aNcVW+uebzwVt+/nHU0QtaVDaREwKYkXiw8+T1CQVhgV8YydNwR1lQCC1KqRGPYSx8AB3CkWfGarFelvuN5Xb5HaDSezqLRT2MksHSmD2KIAy4cyRPqzvKEhZCCyIJgQkPOBgKVLmy8jXk6w1uvP6zcvfgD1Es8pGoBL3Q5peAqBrrZbnC+r7rvz/cU7ptycWfqYVe5M6N4OGNvRZEAoR2slxZN7DpLPZUnixtgLjXj4zSBRB3trcyk6tXoj8D8MPOjeDhEhY+gACAhLStRpa1/lz7wKZvhsGO/zzaCVgaUxilkks2v5TwSVG8Tjm+xEHeQMBFAjlPsWojXwFO4IyFi4w145FlQuWkUWGTTDgSY0W3ZVvtaP1/gfCBYKjM4RIUmpY8KJVcvn/zGyirr5G6ucTWzXrF6gxu0WBJ+CRnLFw9dlKLXWKQCoHgiOA5ObajtWC9HCJStlJ38OiPzt/esz4shHYxemUzGZ0bk/0VkYJ3WuuHSesriegMiVM+qVI3LoodrEiDWkm4uqlzSjPbEBEBxB31ERFg2h4UiROnsr5WyvUAQOcCBvxCHswYN6M1I7GpzzafNCMVRp4igOhYJr9YB3GwRGCguRclAru6ATl559pv3fTJ4atL9fR3yBIsmvLSmYm0JGs6q3zSDAAkTmL3nJC4o5syUAB+Rbdmla3UAYE0h3ZiMcZRRp+jn6lfCuAHGAoYSx7ZghnNA0ggpJmcdS+TjjdUgJdta4Xw9P/8aOuKZVoLrXG1+Foo/hOIMKw0BSIROOVrdnH1NwD8oPOMPA3PJ2dy2IlYkn6zJIEIkDZtKuUP3FU7zkf3APhk+8Cmh9jzQhHbXNCPCBCAwBcBAHbNnZz/H2zskRjwYpE7sYuBjUjSLU5xaoGEUCzy/v3gIzkxM7KBqqOiABCKIJQmLbZMslR6i7R21Yvenq5b/7G9b9M23Za70VRqhkB6au8PEucAyDkAkk2bxeUJhgIOR/ICIjeZjQWADXf3tFSft1njFLvaeHTJmdF4WCjZwyn+hC0/RcFEXEep5MpANOtGNOe8xMvqBV4BIJr8syT7hgKDYpEVP3uni+IPkZCasgwiITgBBCsbpNisAacQ2gbDvW5g01ma9RUCuQJOXgeis6v73Soh5LSyLK3Z+qOjuYP5Hd3PELBXmH7kmB947Nptjw6XklDLKZZdSeIE4uQ1r+vffKFRSqt6bAGANIuwI6eUmR8iMV3UWl/Xc14kddKchROZqleWItNLTXCZkSc2FCikwFnz+SC3/PRV74DI+yC4kjJ6BTNBnADWQZwDpUQEEQCm1aR4LSl+EwTdqEUuv6P7YSj6e4nN/w8LO56aANJJbugTkXLVCER0syO6mSGQjD6kYFgBxh6cHwCVy4RikZV+diWT+GKnDp6GIBOCmWSTyEykztqbfifjX3J2NxHfRL46HwK4egxbiSwgMsHGAoA0aAoBCCIRiZBI8l6k2dcbyFMbnMMn8zt77jKx+z9hYeDJRLUX6aSXRiJHWvHG/tm5J+YEtPaNv6pRKjl25t2c9VkgUz+dQgIiiOBgw9idjoEMAGEhtB0DPW/1N/zaQyrn3wrG+XY8srYSWVhJ0m0ns7ENko0OZVUizdFJbThxUeySpDhZrrLeVs9XD+d39HwisQtLLhgK1ClNUs7ky86PKfWokp+HP0hUzr6P3Frv2N79etb647YaORJSU8cPhBSBkBAFQVho7p2LRQaRIAi4fUfP/6UMf4eZLzJjNSOxcQlopp2wRRPZlSJixmpGrFuhWrz/3fHanl35v928NiyEtrNY1KcqgGbGRFuOUrVyVJVywV1bV9oofreAPkdAG6yT5DQ3IUKJRIj+HQBeOCM/9e8OBQqFkl1/6wdOV63Zr3Gr/2Y7WnWJTUOzvalERBpOxIzWrGrJXIll9ED7tk3vHb6h9L3OYlE3jO3FDSBK3GqBrDD1zPfbB7rMMY6nstXobM5lVkvdQIxtDjwJDcRiLAHuBwAwvL8sU5Y8hZJdv/2aM9nP3ctZ70IzWo0J5M1pcmgaZ7Ljdcu+OoNz/rfXb7vuj4ZvKH39VATR9E5heoI5oy89ti0sEONgK5ElCDcLnoT1Vmxr8QuO8EMkOsxNCTy9JbngV7autL79jsroC8x4LQHPvNEnpCS2Dkq0ymWG8ts2/97wDaV7T7XkuOnbQInn4lwttsd4nBgriY1B1PyfEMtZDwT65t6uHaPBUKCmkB9NQUeZgCLZTByqrHeBGaub+QTPJPHJsE7ghCmrh/K3X58/1dJSeKbnLK0YOMpDPB3gTDIq2EUGgGyf6ncarvr6/qf/UrVl32zGajExnTgjlohdbB0pXgZfD10x9LEcOsp0Imq4FiCA5pR+sCrns6vH95a7B39YLBb5eKK/oR7ygz1v1Fn/T+1YzcyBsTwtdWZrkVGtmY6DBw5+FoXQBmHASwCa00UHOWONMP4EAip3HL/eOxzJy4btPZ5YdxsIgEuphIUwHyJlx+qWPPXh9Tt6Lg0LocUpwBEt3FOQMKCKhT40lbqwzmJRo1RyVW3fr5dlLrS12CAtpV4oZ0JEQJ5msvazCeKXJNCcyiCJjegVLTes77/+0wkh13lUdTTcW7KJ9MEnJLaSZkDOAMAQEVgRMSJiBDBJqu5MpBCUq9Yd+/q32wd7Lkd4Mkghcck6THqQ/MS8hDJmKPjj0arR2exn8n1dvzlcGjZHWvDOYqcGQcaVeatq8dfZunFJKGL6wCHNpFp8pduyWrdltW7JaPI0H8r5nr7zyp4Gif0gAAQLGjsAeZpVi69e8eR8rVp8BcHKhU6xEzlhOIEw+i/80vsvfGTk16uTovIAgNUdqwUAWOhaYpp+exgRATPpnK9stf5LV4seICd7QRQJsIYIl3PGXy8icHVjaRoqkoSUq8cQwe9fcNfWlWHh9peSatEFZ0IIaUUSmcclMk8IEZGkkVUiSf3rsYUfoyFiG8VGL8udG4/KR1Eq/UXQEagQqUcmoJBCu/bLNy1HvfKbrm6IBKpp01nEkadZRKo2im7xkRv4t8237p/8kQ3be7wKxVcz8V+oFr/DVqLmQUQgZ5xVLZmVrlK/CsDXO3s7FToWVqqsAFblPG3H3PZy18BfHe1zJ0WQj0DKVSMhoo/l+zffHhYGX2xIoSAMOERo/Wr1Ms56r3JR7EDNqi9x5CkWkRckit++Z8vOhwAAQ4HqHElib0kdeV8M4Bv5v/3g98TFX1Mt/tW2UnNEzE2KISEmsUxvBvB1YCOA8oJUYQLOYihQa9t+Ve8be87MNoCkaSxME0HOWKPbsqfbSv29AG7r7C2qYZTMRHCV8XryFKQeuyYNaAERQBTZev0P926546H8UOCXgzAGvbKGHAA67yvq4atKY+cU//hdrefgQZXxL3L15kBLIBLjCILLGg7AQuWFSERQCO2r7yvSvqtvtbPrhRFRU09q0U8TQyTGCRyuASblRu/alXzA4XVp5L5Zm9mqlgxL3W7bu+WOBzZs7/HKhTA6mh01fFXJdN5X1E+V7qwZ6z4kIjINdcliLEjw2rVfuGY5CNJUlsEp4sYLxNXhpJb8PMqTfkbExZzxWLX4alpeDIFdZEgYGy7s63ptowHVMDa69KicLU5AzW2nEEjZWhw74DYUi7z7mTOPC/Dhq0oGxSI/3j14v4vihzjrM5o5GERICgWwym/JrgaAscefPSkBNKO6MA/yJqv8A87VmZyW4yDVc7X4PCi1hbP+O1w9dpCmAEzixOoW34+q8eUAnuzcCB6+KkmPEKJVcJIk4U8ZQyLse+zq8eOPdQ/+tBnvLW13IgT1z6T4CoEINZOl6yCkWZE1pwFA9ZmXFgmADh0i27Js9IkHCzuqTXztCQD35gd7Ps0Z7zO2Fjlqiq8RARNI3MUA/q5xaotS5HDwF9mGlzn130YCxRCmp0GQRsL9lL68K7W+4Z5S07HuSARMZGPOAQA6gEUFIAjo4IHlORSLdXSUCSP544cbGgV5m0u35Ae6rlRZ/y22Gk/dFSYCREBE5wJA2zNnJn+zF8Aame48QJL+/SnM4QiSdUZMMgmf1JWuM/LCPG2SYjoBoXB88T8MuM77Nmr0CrmBrm1M9JbmFjutVYKcPsmQplKp5Nr7uypMzTGIREKwFiJybmexs7lswY0ASoAA508TOglBqsx4At6TE0Dz7joO74IDkSjWT0g9RtNEXCIxshP/LhYp1SC/BFNSxdHEJrrYOvb0uc+vOe8iFIs81djU8C64tNrjdyS2IDRPHThjY6e8lwAgd9ZKWQLQVEZHUiPmyC4nrdC0R5bAxUw2ZtM9+Rkxo1Gz1QQeHfuKWOQTKJXchpdWHndNNmzv8VAquXV9m9+pcn7e1uPmYm8iSCpNaP/BSF54hTpeAtCxx9pnkxoxMvJ28hSkiVp3abjAhAMTYDz0f49Mp16VAG0qdcc5P8j3bbpm95a+eMP2Hg9J53g63OresL3H272lL143sOks5eu/EWtd8zmX5JLDg33PbumroFjk1R3lhQkgPrZEn5ENVGengqFAvbDrBVo9tPqYfygEgELo9n3k1vr67dddSr7aaiuREKZeI5aGAEAiTwNAZ6OTBgCwesjVDZr6fRO/lsjFxlHG29nev5l2d/d9BVvS/2yotCB0IJLdQLxuYNM6rfTfk1ZnuVrUdOhEIEKKBZCHEucCjIXaNsbZ1rkCkLzn2nNfKjVxrdCG7T1e1cc7CLgNoFa4Jst80iV2JCMThuxVSZXG6MsvPbJs+Yqn2VNni2kynYNAsA4i8FTW+3LHzp7fFaIvnPHkYz8eLoQT6rJ9YNM5pNX7APpTUnyarUWOqPm0EQJYjCMH/BOQxNkWHHDStjogek1CW+yaJQBR6gkJlocDP/96fqArEkmC/UdW92kiAJCtkjuftbcuuWnGNF8jBlKuFkOQlPgMf7EsAKSz2KmHbw6r7f2b7+WM7jZJxWmTAU4iOBFXj0W1ZN7n6uZ9+88+77F8/9onBYhBOBNEHSrjt7hqBBfH0wJPErjV7KrRM62i7geAsBC6YGhhxcIIwi42gMjlKBY5lfSHGwnTTDgXATF8zmb+YKoQkEZL2XqUuP1NV2uII1+zi+In1YrRRxK9mEifiXwg4E6JTfe0sxEJBBCZ8SRNgzy1nrRan4g9BxdbmLGaJRCDppewJgKnMppNbIZ29/RVFm6xIbFE1nLOP6/91b/4/T2F8Bv5ocA/YyTvAKDRhGsmRGLSzWKq1Isg7XhBPJ2YfKPVncTmG+VCGE1e+Eat1Uh36YF8/+YHOedf7qqxnW5O9ORrqVxkBYesaSaimRCHQkxsa3EsQrdP4rLmeoxPk+UkMVbY4y+uG+j5RbnQ96PD93RmtfHNbBABMymQICZ2tdg6yOCRFj7oKFMIOAFuAdE9gtkoxyCmWYxQiYjVrVltxmpfeaxn8PGkDKk0d1WqDbuF6LnUnmleCsVWyNNnMbn78wObvw3BkyDKCOHVNIg1J0VtkogYlfPZxe4bj3XteDQYCtThfXfCQmiDIFB7uge/5Sr1f9YtvhKRhVNCLBBSimw1GgfJn0NA4TRCJ02RtqlqB/E+FxuQiJqGlCCJjRDE51zmD1Rb9qOqNbNV5TJvF5GLTwYACTGTjUzMJJ8CQGFw5IUP83kBQJbkRhebGimVtBZeGPixqsVXzsin9nTteCoIg7m/+6PRR8DZsovMAVKKprUeRASB2EpkzVjNmPGaSfod0PiCB5BAjG7LKKnbz450D+4JhoKj30icNHTivV079rq6/bhq8ZWQnHADVUSMbs1qM1r97mM9A/8vraCde9snvT603D34IoAHKaNFpm9z0UQDLiRNuCS92GxBqy7dkvHMwdr396w8eMtUFr7R0GnPlsHb7Wh10FuW80QkPmFzcGJV1tO2Fj8Zs3v/JNU1L5Jx0vUQXyFKWr3N5uCFDB6V87Wtx//BkAIKoZvqwg/3lmwwFKjyioNbzFjtHr0s5wnmH0QiYlTWU2JlP+rx7+3bvHM/5kN1TV6LUslCQCtWLP8HO177GWcatW2nMIAEEquWjBZjn4Jxv/1o9+DzkCYaVhIkDIYcgiEXjeXe5SrR3V4CIgMRmbc55HwtIs/IWO2t5a07y0EzCWuz+CpBGPCDhb+uOpJPsq9JAHtqAkjEQWB1W85zsdntxkxnuXtwH4YCBWry1KbM+L6P3BqNPHXmH5rx+jbdmtVQTOLm0DuTpHBAt+U8ie3DqFXfVL7xzn87kY2lwkJog6FAPda14+/MWO2uRK0fuXH4yQmgpAbdcsZjznnKVer9/7W/0rnnxh1PYSanlijxOXp7pbypf6sbi7uJ+YBuy6iZVIgc1doRMZTxWOU85SpRv/pl5cqRLV96AgugK1kYhA7FIle06TLjtfu85VlfIPFMJbI+AWARkIgICSBCRJqzniJFcJF5mCJ8eqSr/x4AE30OZ+yJgAhDgRop9A20337dsMD/S/a9d0ExXDWCiJgk/EHNtYNJanocQYh8zcrX7Orxoy6SPyt39d89a3OYLY9MSniKULvi88HbDoLu0G25gqtGcMY25s9T3cPUmxPGRC/2OX4a/IMiahTs67asJiYRa/9FIvOBVz259w2PdvXdk6ZQzGaTbkEqxvdsveOn5ev63m2t+y2JzLeJSXRbVrPvMZJU97QjBywEFtK4PK/RmUJMw5YirUi3+opzPsO5sqvHH6wf+M/Lyl39d2MoUJBpz0Ga2hdK1/d4YSVKMkkevDmsljf1v8dUo60genbS/NGY38T8J889XRdSRLrVVyDJaAJ8UjwvTqU4AZyMC+zz4qRMkH+B5u+MXLv9JxMfmkNDc3J/wj3Xl74H4Hvtd95wCWrmPSLubWDkddZXjeR9cXKoUzsIYAJxIqBcZCDW/cJFZhccvpaN6d7dW/rimc5BiIkUEzGpKYcenGjSDKpNQaMkap3QW6Q915e2rf3C9f/gr5BNEHkvmC7SueQ+g3SvMNGUPp27OIGrm5dNPb4HkD5qH9h0ibCe25qkOAI8H3AmEuDFtov1/t2X9cWTzhsFYcApxzM/zPFQoDD5YhQBtd/ZlWehS0VwgYicSyKrAWpJ69dqYLwI0NNgKhPox8bGj+zt2jE6Qfwe4qmmdRUDAFk3sGmZn9HnmbqRqe4LOSM6kyNXiQ+MbOl7AlO8S+Qww57yO7suAtHlsHIhgHMgWAlBDoQITPtB9BhBHhR495ev/+JzJ9hwLnJnsahPeMfSYvoe0xzBUKCChso9GYeAjtW465gHcChQlPRUnuOX7J30AECpNG9MbFMSoFikRu3a6o6ypFc3pTacEMICN7p1DHeUJUlznfV5EKRIr1ivZtZ3+nZjOv/EM0/mN+QmVF4YcOdInlZ3lBOOjWjp5sYm/BdaWoaj692lcSSx3tupVneslgmbpljkToAXxTWXS2OGxvVsfGaRDL20BIcBoxDaM7f3tKzMcgDnroZ1awEoMD8Pwr9ShK+OFPqeSJpxLNkBvISaQ94UCqFt3379b63K0I+Vr+5Qvi6wry9lX1/EvnqrynmfkQz9pGOg61MgktSDXNRmwJINNEnyrN+2+Z2qRYcAsavH5rCrL0UgQkxaL8shPlDp39M92HOq3b7T7FjS5cUi40NflPyazWvJV98lgedi69KrL9P4GBEITEQMgdjIxN6Kljec/pYLfzl87VceCoYCVQ7Li1KdLXoVFnSUCUmeXq/Kei3O2GP3KyIQQbSt1J0wPpPv37wqLIR2sbr6ixtAAgoLoT1/e8+rCPR2W51qrT6xi6zoFn8ViH4XADp7i2oJQIttpK11GdLBGb0MzsmUL99lCJKS7SuWvLDFqr4myAxZBcVpjlIT/keitlYl/961BKDF64rSKJw75HFNUf+lcbA0Gr9xCUCLToOllaFG1fe4mqmlyT5TrfUHkgvJH17ch2/JjWeUSi4/0HWPyvlXm0r9+NdkCgSKBCJ1K27t3q4dzyxWZnrJjU/b5BFTrzMWxEzHq5sSSKzbsgzBX+3t2vFMcpv04gxrLEkgHMrMW993/Uf9Fa1/bSsRnLFpH6CJNUquoiNAr2hhc6D6T7mL+W27/+Mlh/nMpFwC0MIGUXtf12b21efIU6dLkveMVEKBPA1xDmLd4MGXXr7p5zeHtTRleNEGVZcANHmkMbGO7df+umRyN5LI1c6515JAg2k/Ed0Pi20jXX3fTWUSLWbwAMB/Aw6+bSN3Te5cAAAAAElFTkSuQmCC" alt="Bolt" width="48" height="28">
+  <div class="header-sub" id="headerSub">Véhicules éligibles</div>
+  <div class="lang-switch" id="langSwitch"></div>
+</header>
+<div class="container">
+  <p class="page-sub" id="pageSub">Consultez la liste des véhicules éligibles par catégorie</p>
+  <div class="notice" id="dateNotice"></div>
+  <div class="region-switch" id="regionSwitch"></div>
+  <p class="region-note" id="regionNote"></p>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Rechercher un véhicule ou une marque..." autocomplete="off">
+  </div>
+  <div id="normalView">
+    <div class="cat-tabs" id="catTabs"></div>
+    <div class="cat-note" id="catNote"></div>
+    <div class="stats-line" id="statsLine"></div>
+    <div class="brands-grid" id="brandsGrid"></div>
+  </div>
+  <div class="search-results" id="searchResults"></div>
+</div>
+<script>
+// Données : générées depuis vehicles.csv par generate.py (colonne Zones : BRU, FLA, WAL)
+var ROWS = [
+["Comfort", "AIWAYS", "U5", "BRU;FLA;WAL"],
+["Comfort", "Alfa Romeo", "Junior", "BRU;FLA;WAL"],
+["Comfort", "Alfa Romeo", "Stelvio", "BRU;FLA;WAL"],
+["Comfort", "Audi", "A4", "BRU;FLA;WAL"],
+["Comfort", "Audi", "A4 Allroad", "BRU;FLA;WAL"],
+["Comfort", "Audi", "A4 Avant", "BRU;FLA;WAL"],
+["Comfort", "Audi", "A5", "BRU;FLA;WAL"],
+["Comfort", "Audi", "A6", "BRU;FLA;WAL"],
+["Comfort", "Audi", "A6 Avant", "BRU;FLA;WAL"],
+["Comfort", "Audi", "A7", "BRU;FLA;WAL"],
+["Comfort", "Audi", "A8", "BRU;FLA;WAL"],
+["Comfort", "Audi", "Q3", "BRU;FLA;WAL"],
+["Comfort", "Audi", "Q4 e-tron", "BRU;FLA;WAL"],
+["Comfort", "Audi", "Q5", "BRU;FLA;WAL"],
+["Comfort", "Audi", "Q5 Sportback", "BRU;FLA;WAL"],
+["Comfort", "Audi", "Q6", "BRU;FLA;WAL"],
+["Comfort", "Audi", "Q7", "BRU;FLA;WAL"],
+["Comfort", "Audi", "Q8", "BRU;FLA;WAL"],
+["Comfort", "Audi", "e-tron", "BRU;FLA;WAL"],
+["Comfort", "Audi", "e-tron GT", "BRU;FLA;WAL"],
+["Comfort", "Audi", "e-tron Sportback", "BRU;FLA;WAL"],
+["Comfort", "BMW", "2 series", "BRU;FLA;WAL"],
+["Comfort", "BMW", "2 series Active Tourer", "BRU;FLA;WAL"],
+["Comfort", "BMW", "2 series Gran Tourer", "BRU;FLA;WAL"],
+["Comfort", "BMW", "216", "BRU;FLA;WAL"],
+["Comfort", "BMW", "218", "BRU;FLA;WAL"],
+["Comfort", "BMW", "225", "BRU;FLA;WAL"],
+["Comfort", "BMW", "3 series", "BRU;FLA;WAL"],
+["Comfort", "BMW", "3 series Gran Turismo", "BRU;FLA;WAL"],
+["Comfort", "BMW", "316", "BRU;FLA;WAL"],
+["Comfort", "BMW", "318", "BRU;FLA;WAL"],
+["Comfort", "BMW", "320", "BRU;FLA;WAL"],
+["Comfort", "BMW", "330", "BRU;FLA;WAL"],
+["Comfort", "BMW", "4 series", "BRU;FLA;WAL"],
+["Comfort", "BMW", "4 series Gran Coupé", "BRU;FLA;WAL"],
+["Comfort", "BMW", "418", "BRU;FLA;WAL"],
+["Comfort", "BMW", "5 series", "BRU;FLA;WAL"],
+["Comfort", "BMW", "5 series Gran Turismo", "BRU;FLA;WAL"],
+["Comfort", "BMW", "518", "BRU;FLA;WAL"],
+["Comfort", "BMW", "520", "BRU;FLA;WAL"],
+["Comfort", "BMW", "530", "BRU;FLA;WAL"],
+["Comfort", "BMW", "530e iPerformance", "BRU;FLA;WAL"],
+["Comfort", "BMW", "7 series", "BRU;FLA;WAL"],
+["Comfort", "BMW", "725", "BRU;FLA;WAL"],
+["Comfort", "BMW", "740", "BRU;FLA;WAL"],
+["Comfort", "BMW", "745", "BRU;FLA;WAL"],
+["Comfort", "BMW", "X1", "BRU;FLA;WAL"],
+["Comfort", "BMW", "X2", "BRU;FLA;WAL"],
+["Comfort", "BMW", "X3", "BRU;FLA;WAL"],
+["Comfort", "BMW", "X4", "BRU;FLA;WAL"],
+["Comfort", "BMW", "X5", "BRU;FLA;WAL"],
+["Comfort", "BMW", "X6", "BRU;FLA;WAL"],
+["Comfort", "BMW", "X7", "BRU;FLA;WAL"],
+["Comfort", "BMW", "i4", "BRU;FLA;WAL"],
+["Comfort", "BMW", "i5", "BRU;FLA;WAL"],
+["Comfort", "BMW", "i7", "BRU;FLA;WAL"],
+["Comfort", "BMW", "iX", "BRU;FLA;WAL"],
+["Comfort", "BMW", "iX1", "BRU;FLA;WAL"],
+["Comfort", "BMW", "iX2", "BRU;FLA;WAL"],
+["Comfort", "BMW", "iX3", "BRU;FLA;WAL"],
+["Comfort", "BMW", "iX40", "BRU;FLA;WAL"],
+["Comfort", "BYD", "Atto 3", "BRU;FLA;WAL"],
+["Comfort", "BYD", "D1", "BRU;FLA;WAL"],
+["Comfort", "BYD", "Han", "BRU;FLA;WAL"],
+["Comfort", "BYD", "S2", "BRU;FLA;WAL"],
+["Comfort", "BYD", "Seal", "BRU;FLA;WAL"],
+["Comfort", "BYD", "Seal 5", "BRU;FLA;WAL"],
+["Comfort", "BYD", "Seal 6", "BRU;FLA;WAL"],
+["Comfort", "BYD", "Seal U", "BRU;FLA;WAL"],
+["Comfort", "BYD", "Sealion 7", "BRU;FLA;WAL"],
+["Comfort", "BYD", "Song L DM-i", "BRU;FLA;WAL"],
+["Comfort", "BYD", "Song Plus Flagship EV", "BRU;FLA;WAL"],
+["Comfort", "BYD", "Tang", "BRU;FLA;WAL"],
+["Comfort", "BYD", "e9 (Han)", "BRU;FLA;WAL"],
+["Comfort", "Chevrolet", "Suburban", "BRU;FLA;WAL"],
+["Comfort", "Citroen", "C-Elysée", "BRU;FLA;WAL"],
+["Comfort", "Citroen", "C4 Cactus", "BRU;FLA;WAL"],
+["Comfort", "Citroen", "C4 X", "BRU;FLA;WAL"],
+["Comfort", "Citroen", "C5", "BRU;FLA;WAL"],
+["Comfort", "Citroen", "C5 Aircross", "BRU;FLA;WAL"],
+["Comfort", "Citroen", "C5 X", "BRU;FLA;WAL"],
+["Comfort", "Citroen", "DS 7 Crossback", "BRU;FLA;WAL"],
+["Comfort", "Citroen", "E-C4", "BRU;FLA;WAL"],
+["Comfort", "Citroen", "Grand C4 Picasso", "BRU;FLA;WAL"],
+["Comfort", "Citroen", "Grand C4 SpaceTourer", "BRU;FLA;WAL"],
+["Comfort", "Citroen", "Jumpy", "BRU;FLA;WAL"],
+["Comfort", "Citroen", "ë-C4 X", "BRU;FLA;WAL"],
+["Comfort", "Citroen", "ë-SpaceTourer", "BRU;FLA;WAL"],
+["Comfort", "Cupra", "Tavascan", "BRU;FLA;WAL"],
+["Comfort", "Cupra", "Terramar", "BRU;FLA;WAL"],
+["Comfort", "DFSK", "FENGON 580", "BRU;FLA;WAL"],
+["Comfort", "DS", "7 Crossback", "BRU;FLA;WAL"],
+["Comfort", "DS", "7 Crossback E-Tense", "BRU;FLA;WAL"],
+["Comfort", "DS", "9 E-Tense", "BRU;FLA;WAL"],
+["Comfort", "Fiat", "Scudo", "BRU;FLA;WAL"],
+["Comfort", "Fiat", "Ulysse", "BRU;FLA;WAL"],
+["Comfort", "Fisker", "Ocean", "BRU;FLA;WAL"],
+["Comfort", "Ford", "Capri", "BRU;FLA;WAL"],
+["Comfort", "Ford", "Explorer", "BRU;FLA;WAL"],
+["Comfort", "Ford", "Focus", "BRU;FLA;WAL"],
+["Comfort", "Ford", "Focus Estate", "BRU;FLA;WAL"],
+["Comfort", "Ford", "Galaxy", "BRU;FLA;WAL"],
+["Comfort", "Ford", "Grand Tourneo", "BRU;FLA;WAL"],
+["Comfort", "Ford", "Kuga", "BRU;FLA;WAL"],
+["Comfort", "Ford", "Mondeo", "BRU;FLA;WAL"],
+["Comfort", "Ford", "Mustang Mach-E", "BRU;FLA;WAL"],
+["Comfort", "Ford", "S-Max", "BRU;FLA;WAL"],
+["Comfort", "Ford", "Tourneo custom", "BRU;FLA;WAL"],
+["Comfort", "Ford", "Transit", "BRU;FLA;WAL"],
+["Comfort", "Ford", "Vignale", "BRU;FLA;WAL"],
+["Comfort", "Honda", "CR-V", "BRU;FLA;WAL"],
+["Comfort", "Honda", "HR-V", "BRU;FLA;WAL"],
+["Comfort", "Hyundai", "Azera", "BRU;FLA;WAL"],
+["Comfort", "Hyundai", "IONIQ 5", "BRU;FLA;WAL"],
+["Comfort", "Hyundai", "IONIQ 6", "BRU;FLA;WAL"],
+["Comfort", "Hyundai", "IONIQ 7", "BRU;FLA;WAL"],
+["Comfort", "Hyundai", "IONIQ 9", "BRU;FLA;WAL"],
+["Comfort", "Hyundai", "Ioniq", "BRU;FLA;WAL"],
+["Comfort", "Hyundai", "Kona", "BRU;FLA;WAL"],
+["Comfort", "Hyundai", "Kona EV", "BRU;FLA;WAL"],
+["Comfort", "Hyundai", "Kona Electric", "BRU;FLA;WAL"],
+["Comfort", "Hyundai", "Nexo", "BRU;FLA;WAL"],
+["Comfort", "Hyundai", "SANTAFE", "BRU;FLA;WAL"],
+["Comfort", "Hyundai", "Santa Fe", "BRU;FLA;WAL"],
+["Comfort", "Hyundai", "Tucson", "BRU;FLA;WAL"],
+["Comfort", "Hyundai", "i40", "BRU;FLA;WAL"],
+["Comfort", "Infiniti", "Q50", "BRU;FLA;WAL"],
+["Comfort", "Infiniti", "Q70", "BRU;FLA;WAL"],
+["Comfort", "Jaguar", "I-Pace", "BRU;FLA;WAL"],
+["Comfort", "Jaguar", "XE", "BRU;FLA;WAL"],
+["Comfort", "Jaguar", "XF", "BRU;FLA;WAL"],
+["Comfort", "Jeep", "Compass", "BRU;FLA;WAL"],
+["Comfort", "Jeep", "Wrangler", "BRU;FLA;WAL"],
+["Comfort", "KGM", "Torres EVX", "BRU;FLA;WAL"],
+["Comfort", "Kia", "Carens", "BRU;FLA;WAL"],
+["Comfort", "Kia", "EV4", "BRU;FLA;WAL"],
+["Comfort", "Kia", "EV6", "BRU;FLA;WAL"],
+["Comfort", "Kia", "EV6 GT", "BRU;FLA;WAL"],
+["Comfort", "Kia", "EV9", "BRU;FLA;WAL"],
+["Comfort", "Kia", "Niro", "BRU;FLA;WAL"],
+["Comfort", "Kia", "Optima", "BRU;FLA;WAL"],
+["Comfort", "Kia", "Sorento", "BRU;FLA;WAL"],
+["Comfort", "Kia", "Sportage", "BRU;FLA;WAL"],
+["Comfort", "Kia", "e-Niro", "BRU;FLA;WAL"],
+["Comfort", "Kia", "e-Soul", "BRU;FLA;WAL"],
+["Comfort", "LEVC", "LEVC TX VISTA COMFORT", "BRU;FLA;WAL"],
+["Comfort", "LEVC", "LEVC TX VISTA COMFORT PLUS", "BRU;FLA;WAL"],
+["Comfort", "LEVC", "LEVC TXE", "BRU;FLA;WAL"],
+["Comfort", "LEVC", "TX", "BRU;FLA;WAL"],
+["Comfort", "LEVC", "TX Vista", "BRU;FLA;WAL"],
+["Comfort", "Land Rover", "Discovery Sport", "BRU;FLA;WAL"],
+["Comfort", "Land Rover", "Evoque", "BRU;FLA;WAL"],
+["Comfort", "Land Rover", "Range Rover Evoque", "BRU;FLA;WAL"],
+["Comfort", "Land Rover", "Range Rover Velar", "BRU;FLA;WAL"],
+["Comfort", "Leapmotor", "B10", "BRU;FLA;WAL"],
+["Comfort", "Leapmotor", "C11", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "CT200h", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "ES", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "ES300", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "ES300h", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "GS", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "GS300", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "IS", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "IS 300h", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "IS300", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "IS300h", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "LS", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "NX", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "NX 350h", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "NX300", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "NX300h", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "NX450H", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "NX450H+", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "RX", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "RX450h", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "RX450hL", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "RZ", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "RZ 300e", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "UX", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "UX F Series", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "UX F-Sport", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "UX200", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "UX250h", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "UX300e", "BRU;FLA;WAL"],
+["Comfort", "Lexus", "UX300h", "BRU;FLA;WAL"],
+["Comfort", "Lynk&Co", "01", "BRU;FLA;WAL"],
+["Comfort", "MG", "5", "BRU;FLA;WAL"],
+["Comfort", "MG", "ES", "BRU;FLA;WAL"],
+["Comfort", "MG", "HS", "BRU;FLA;WAL"],
+["Comfort", "MG", "MG eHS", "BRU;FLA;WAL"],
+["Comfort", "MG", "MG5", "BRU;FLA;WAL"],
+["Comfort", "MG", "Marvel R", "BRU;FLA;WAL"],
+["Comfort", "MG", "RX5", "BRU;FLA;WAL"],
+["Comfort", "MG", "RX6", "BRU;FLA;WAL"],
+["Comfort", "MG", "RX8", "BRU;FLA;WAL"],
+["Comfort", "MG", "S5", "BRU;FLA;WAL"],
+["Comfort", "MG", "ZS", "BRU;FLA;WAL"],
+["Comfort", "MG", "ZS EV", "BRU;FLA;WAL"],
+["Comfort", "Maxus", "Euniq 6", "BRU;FLA;WAL"],
+["Comfort", "Mazda", "3", "BRU;FLA;WAL"],
+["Comfort", "Mazda", "6", "BRU;FLA;WAL"],
+["Comfort", "Mazda", "CX-5", "BRU;FLA;WAL"],
+["Comfort", "Mazda", "CX-60", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "200", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "200c", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "A-class", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "A200", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "A250", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "B-class", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "B180", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "B200", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "B250", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "C 180", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "C 320", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "C-class", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "C180", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "C200", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "C220", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "C250", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "C300", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "C350", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "CLA", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "CLA Shooting Brake", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "CLA200", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "CLA220", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "CLS250", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "Citan", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "E 320", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "E-class", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "E-class Limousine", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "E200", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "E220", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "E300", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "E350", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "EQA", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "EQB", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "EQC", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "EQC 400", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "EQE", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "EQE SUV", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "EQS", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "EQV", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "EQV 300", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "GLA", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "GLA 250", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "GLA 250 (e)", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "GLA200", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "GLA220", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "GLB", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "GLC", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "GLC Coupé", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "GLC200", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "GLC300", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "GLC350e", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "GLE", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "GLE Coupé", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "M-class", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "S-class", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "S350", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "S560", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "S580", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "Sprinter", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "T 180 D", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "V-Klasse", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "V-class", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "V220", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "V250", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "V300", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "VITO TAXI", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "Viano", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "Vito", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "Vito 114", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "Vito 116", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "Vito 119", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "Vito 220", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "Vito Tourer", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "e-Vito", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "eVito", "BRU;FLA;WAL"],
+["Comfort", "Mercedes-Benz", "eVito Tourer", "BRU;FLA;WAL"],
+["Comfort", "Mitsubishi", "Eclipse Cross", "BRU;FLA;WAL"],
+["Comfort", "Mitsubishi", "Montero", "BRU;FLA;WAL"],
+["Comfort", "Mitsubishi", "Outlander Sport", "BRU;FLA;WAL"],
+["Comfort", "Nissan", "Ariya", "BRU;FLA;WAL"],
+["Comfort", "Nissan", "NV300", "BRU;FLA;WAL"],
+["Comfort", "Nissan", "Qashqai", "BRU;FLA;WAL"],
+["Comfort", "Nissan", "Qashqai+2", "BRU;FLA;WAL"],
+["Comfort", "Nissan", "X-Trail", "BRU;FLA;WAL"],
+["Comfort", "Opel", "Combo Life", "BRU;FLA;WAL"],
+["Comfort", "Opel", "Frontera", "BRU;FLA;WAL"],
+["Comfort", "Opel", "Insignia", "BRU;FLA;WAL"],
+["Comfort", "Opel", "Insignia Sports Tourer", "BRU;FLA;WAL"],
+["Comfort", "Opel", "Vivaro", "BRU;FLA;WAL"],
+["Comfort", "Opel", "Vivaro-B", "BRU;FLA;WAL"],
+["Comfort", "Opel", "Zafira-e", "BRU;FLA;WAL"],
+["Comfort", "Peugeot", "3008", "BRU;FLA;WAL"],
+["Comfort", "Peugeot", "408", "BRU;FLA;WAL"],
+["Comfort", "Peugeot", "5008", "BRU;FLA;WAL"],
+["Comfort", "Peugeot", "508", "BRU;FLA;WAL"],
+["Comfort", "Peugeot", "508 SW", "BRU;FLA;WAL"],
+["Comfort", "Peugeot", "Expert", "BRU;FLA;WAL"],
+["Comfort", "Peugeot", "Expert Eurobus", "BRU;FLA;WAL"],
+["Comfort", "Peugeot", "Traveller", "BRU;FLA;WAL"],
+["Comfort", "Peugeot", "e-Traveller", "BRU;FLA;WAL"],
+["Comfort", "Polestar", "2", "BRU;FLA;WAL"],
+["Comfort", "Porsche", "Cayenne", "BRU;FLA;WAL"],
+["Comfort", "Porsche", "Macan", "BRU;FLA;WAL"],
+["Comfort", "Renault", "Arkana", "BRU;FLA;WAL"],
+["Comfort", "Renault", "Arkana (Mégane Conquest)", "BRU;FLA;WAL"],
+["Comfort", "Renault", "Austral", "BRU;FLA;WAL"],
+["Comfort", "Renault", "Espace", "BRU;FLA;WAL"],
+["Comfort", "Renault", "Koleos", "BRU;FLA;WAL"],
+["Comfort", "Renault", "Latitude", "BRU;FLA;WAL"],
+["Comfort", "Renault", "Rafale", "BRU;FLA;WAL"],
+["Comfort", "Renault", "Scenic E-Tech", "BRU;FLA;WAL"],
+["Comfort", "Renault", "Symbioz E-Tech", "BRU;FLA;WAL"],
+["Comfort", "Renault", "Talisman", "BRU;FLA;WAL"],
+["Comfort", "Renault", "Talisman Berline", "BRU;FLA;WAL"],
+["Comfort", "Renault", "Trafic", "BRU;FLA;WAL"],
+["Comfort", "Seat", "Alhambra", "BRU;FLA;WAL"],
+["Comfort", "Seat", "Tarraco", "BRU;FLA;WAL"],
+["Comfort", "Seres", "3", "BRU;FLA;WAL"],
+["Comfort", "Skoda", "Elroq", "BRU;FLA;WAL"],
+["Comfort", "Skoda", "Enyaq", "BRU;FLA;WAL"],
+["Comfort", "Skoda", "Enyaq iV", "BRU;FLA;WAL"],
+["Comfort", "Skoda", "Kodiaq", "BRU;FLA;WAL"],
+["Comfort", "Skoda", "Octavia", "BRU;FLA;WAL"],
+["Comfort", "Skoda", "Octavia Estate", "BRU;FLA;WAL"],
+["Comfort", "Skoda", "Superb", "BRU;FLA;WAL"],
+["Comfort", "Suzuki", "Across", "BRU;FLA;WAL"],
+["Comfort", "Suzuki", "S-Cross", "BRU;FLA;WAL"],
+["Comfort", "Suzuki", "SX4 S-Cross", "BRU;FLA;WAL"],
+["Comfort", "Tesla", "Model 3", "BRU;FLA;WAL"],
+["Comfort", "Tesla", "Model S", "BRU;FLA;WAL"],
+["Comfort", "Tesla", "Model X", "BRU;FLA;WAL"],
+["Comfort", "Tesla", "Model Y", "BRU;FLA;WAL"],
+["Comfort", "Toyota", "Camry", "BRU;FLA;WAL"],
+["Comfort", "Toyota", "Corolla Cross", "BRU;FLA;WAL"],
+["Comfort", "Toyota", "Corolla Touring", "BRU;FLA;WAL"],
+["Comfort", "Toyota", "Corolla Touring Sports", "BRU;FLA;WAL"],
+["Comfort", "Toyota", "Grand Highlander", "BRU;FLA;WAL"],
+["Comfort", "Toyota", "Highlander", "BRU;FLA;WAL"],
+["Comfort", "Toyota", "Mirai", "BRU;FLA;WAL"],
+["Comfort", "Toyota", "ProAce", "BRU;FLA;WAL"],
+["Comfort", "Toyota", "RAV4", "BRU;FLA;WAL"],
+["Comfort", "Toyota", "Verso", "BRU;FLA;WAL"],
+["Comfort", "Toyota", "Yaris Cross", "BRU;FLA;WAL"],
+["Comfort", "Toyota", "bZ4X", "BRU;FLA;WAL"],
+["Comfort", "Vinfast", "VF8", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "Arteon", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "Arteon Shooting Brake", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "California", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "Golf Sportsvan", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "ID.4", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "ID.5", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "ID.7", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "ID.Buzz", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "Jetta", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "Kombi", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "Multivan", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "Passat", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "Passat CC", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "Passat Combi", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "Passat Variant", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "Sharan", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "Tayron", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "Tiguan", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "Touran", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "Transporter Kombi", "BRU;FLA;WAL"],
+["Comfort", "Volkswagen", "Transporter Multivan", "BRU;FLA;WAL"],
+["Comfort", "Volvo", "S60", "BRU;FLA;WAL"],
+["Comfort", "Volvo", "S90", "BRU;FLA;WAL"],
+["Comfort", "Volvo", "V60", "BRU;FLA;WAL"],
+["Comfort", "Volvo", "V90", "BRU;FLA;WAL"],
+["Comfort", "Volvo", "XC40", "BRU;FLA;WAL"],
+["Comfort", "Volvo", "XC40 Recharge", "BRU;FLA;WAL"],
+["Comfort", "Volvo", "XC60", "BRU;FLA;WAL"],
+["Comfort", "Volvo", "XC90", "BRU;FLA;WAL"],
+["Comfort", "Xpeng", "G6", "BRU;FLA;WAL"],
+["Comfort", "Xpeng", "G9", "BRU;FLA;WAL"],
+["Premium", "Alfa Romeo", "Stelvio", "BRU;FLA;WAL"],
+["Premium", "Audi", "A4", "BRU;FLA;WAL"],
+["Premium", "Audi", "A4 Allroad", "BRU;FLA;WAL"],
+["Premium", "Audi", "A4 Avant", "BRU;FLA;WAL"],
+["Premium", "Audi", "A5", "BRU;FLA;WAL"],
+["Premium", "Audi", "A6", "BRU;FLA;WAL"],
+["Premium", "Audi", "A6 Avant", "BRU;FLA;WAL"],
+["Premium", "Audi", "A7", "BRU;FLA;WAL"],
+["Premium", "Audi", "A8", "BRU;FLA;WAL"],
+["Premium", "Audi", "Q4 e-tron", "BRU;FLA;WAL"],
+["Premium", "Audi", "Q5", "BRU;FLA;WAL"],
+["Premium", "Audi", "Q5 Sportback", "BRU;FLA;WAL"],
+["Premium", "Audi", "Q6", "BRU;FLA;WAL"],
+["Premium", "Audi", "Q7", "BRU;FLA;WAL"],
+["Premium", "Audi", "Q8", "BRU;FLA;WAL"],
+["Premium", "Audi", "e-tron GT", "BRU;FLA;WAL"],
+["Premium", "Audi", "e-tron Sportback", "BRU;FLA;WAL"],
+["Premium", "BMW", "3 series", "BRU;FLA;WAL"],
+["Premium", "BMW", "3 series Gran Turismo", "BRU;FLA;WAL"],
+["Premium", "BMW", "318", "BRU;FLA;WAL"],
+["Premium", "BMW", "320", "BRU;FLA;WAL"],
+["Premium", "BMW", "330", "BRU;FLA;WAL"],
+["Premium", "BMW", "4 series", "BRU;FLA;WAL"],
+["Premium", "BMW", "4 series Gran Coupé", "BRU;FLA;WAL"],
+["Premium", "BMW", "418", "BRU;FLA;WAL"],
+["Premium", "BMW", "5 series", "BRU;FLA;WAL"],
+["Premium", "BMW", "5 series Gran Turismo", "BRU;FLA;WAL"],
+["Premium", "BMW", "518", "BRU;FLA;WAL"],
+["Premium", "BMW", "520", "BRU;FLA;WAL"],
+["Premium", "BMW", "530", "BRU;FLA;WAL"],
+["Premium", "BMW", "530e iPerformance", "BRU;FLA;WAL"],
+["Premium", "BMW", "7 series", "BRU;FLA;WAL"],
+["Premium", "BMW", "725", "BRU;FLA;WAL"],
+["Premium", "BMW", "740", "BRU;FLA;WAL"],
+["Premium", "BMW", "745", "BRU;FLA;WAL"],
+["Premium", "BMW", "X3", "BRU;FLA;WAL"],
+["Premium", "BMW", "X4", "BRU;FLA;WAL"],
+["Premium", "BMW", "X5", "BRU;FLA;WAL"],
+["Premium", "BMW", "X6", "BRU;FLA;WAL"],
+["Premium", "BMW", "X7", "BRU;FLA;WAL"],
+["Premium", "BMW", "i4", "BRU;FLA;WAL"],
+["Premium", "BMW", "i5", "BRU;FLA;WAL"],
+["Premium", "BMW", "i7", "BRU;FLA;WAL"],
+["Premium", "BMW", "iX", "BRU;FLA;WAL"],
+["Premium", "BMW", "iX2", "BRU;FLA;WAL"],
+["Premium", "BMW", "iX3", "BRU;FLA;WAL"],
+["Premium", "BMW", "iX40", "BRU;FLA;WAL"],
+["Premium", "BYD", "D1", "BRU;FLA;WAL"],
+["Premium", "BYD", "Han", "BRU;FLA;WAL"],
+["Premium", "BYD", "Seal 5", "BRU;FLA;WAL"],
+["Premium", "BYD", "Seal 6", "BRU;FLA;WAL"],
+["Premium", "BYD", "Sealion 7", "BRU;FLA;WAL"],
+["Premium", "BYD", "Song L DM-i", "BRU;FLA;WAL"],
+["Premium", "BYD", "Song Plus Flagship EV", "BRU;FLA;WAL"],
+["Premium", "BYD", "Tang", "BRU;FLA;WAL"],
+["Premium", "BYD", "e9 (Han)", "BRU;FLA;WAL"],
+["Premium", "Citroen", "DS 7 Crossback", "BRU;FLA;WAL"],
+["Premium", "DS", "7 Crossback E-Tense", "BRU;FLA;WAL"],
+["Premium", "DS", "9 E-Tense", "BRU;FLA;WAL"],
+["Premium", "Fisker", "Ocean", "BRU;FLA;WAL"],
+["Premium", "Ford", "Mustang Mach-E", "BRU;FLA;WAL"],
+["Premium", "Ford", "Tourneo custom", "BRU;FLA;WAL"],
+["Premium", "Ford", "Transit", "BRU;FLA;WAL"],
+["Premium", "Hyundai", "IONIQ 6", "BRU;FLA;WAL"],
+["Premium", "Hyundai", "IONIQ 7", "BRU;FLA;WAL"],
+["Premium", "Hyundai", "IONIQ 9", "BRU;FLA;WAL"],
+["Premium", "Infiniti", "Q70", "BRU;FLA;WAL"],
+["Premium", "Jaguar", "I-Pace", "BRU;FLA;WAL"],
+["Premium", "Jaguar", "XE", "BRU;FLA;WAL"],
+["Premium", "Jaguar", "XF", "BRU;FLA;WAL"],
+["Premium", "Kia", "EV6 GT", "BRU;FLA;WAL"],
+["Premium", "Land Rover", "Range Rover Velar", "BRU;FLA;WAL"],
+["Premium", "Leapmotor", "B10", "BRU;FLA;WAL"],
+["Premium", "Lexus", "ES", "BRU;FLA;WAL"],
+["Premium", "Lexus", "ES300", "BRU;FLA;WAL"],
+["Premium", "Lexus", "ES300h", "BRU;FLA;WAL"],
+["Premium", "Lexus", "IS", "BRU;FLA;WAL"],
+["Premium", "Lexus", "IS 300h", "BRU;FLA;WAL"],
+["Premium", "Lexus", "IS300", "BRU;FLA;WAL"],
+["Premium", "Lexus", "LS", "BRU;FLA;WAL"],
+["Premium", "Lexus", "NX", "BRU;FLA;WAL"],
+["Premium", "Lexus", "NX 350h", "BRU;FLA;WAL"],
+["Premium", "Lexus", "NX300", "BRU;FLA;WAL"],
+["Premium", "Lexus", "NX450H", "BRU;FLA;WAL"],
+["Premium", "Lexus", "NX450H+", "BRU;FLA;WAL"],
+["Premium", "Lexus", "RX", "BRU;FLA;WAL"],
+["Premium", "Lexus", "RX450h", "BRU;FLA;WAL"],
+["Premium", "Lexus", "RX450hL", "BRU;FLA;WAL"],
+["Premium", "Lexus", "RZ", "BRU;FLA;WAL"],
+["Premium", "Lexus", "RZ 300e", "BRU;FLA;WAL"],
+["Premium", "Lexus", "UX", "BRU;FLA;WAL"],
+["Premium", "Lexus", "UX F Series", "BRU;FLA;WAL"],
+["Premium", "Lexus", "UX F-Sport", "BRU;FLA;WAL"],
+["Premium", "Lexus", "UX200", "BRU;FLA;WAL"],
+["Premium", "Lexus", "UX300e", "BRU;FLA;WAL"],
+["Premium", "Lexus", "UX300h", "BRU;FLA;WAL"],
+["Premium", "MG", "ES", "BRU;FLA;WAL"],
+["Premium", "MG", "Marvel R", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "200", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "200c", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "C 180", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "C 320", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "C-class", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "C180", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "C200", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "C220", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "C250", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "C300", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "C350", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "CLA", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "CLA Shooting Brake", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "CLA200", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "CLA220", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "CLS250", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "E 320", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "E-class", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "E-class Limousine", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "E200", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "E220", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "E300", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "E350", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "EQC", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "EQC 400", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "EQE", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "EQE SUV", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "EQS", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "EQV", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "EQV 300", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "GLC", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "GLC Coupé", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "GLC200", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "GLC300", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "GLC350e", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "GLE", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "GLE Coupé", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "M-class", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "S-class", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "S350", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "S560", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "S580", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "Sprinter", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "V-Klasse", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "V-class", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "V220", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "V250", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "V300", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "VITO TAXI", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "Viano", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "Vito", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "Vito 114", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "Vito 116", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "Vito 119", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "Vito 220", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "Vito Tourer", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "e-Vito", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "eVito", "BRU;FLA;WAL"],
+["Premium", "Mercedes-Benz", "eVito Tourer", "BRU;FLA;WAL"],
+["Premium", "Mitsubishi", "Outlander Sport", "BRU;FLA;WAL"],
+["Premium", "Polestar", "2", "BRU;FLA;WAL"],
+["Premium", "Porsche", "Cayenne", "BRU;FLA;WAL"],
+["Premium", "Porsche", "Macan", "BRU;FLA;WAL"],
+["Premium", "Skoda", "Superb", "BRU;FLA;WAL"],
+["Premium", "Tesla", "Model 3", "BRU;FLA;WAL"],
+["Premium", "Tesla", "Model S", "BRU;FLA;WAL"],
+["Premium", "Tesla", "Model X", "BRU;FLA;WAL"],
+["Premium", "Tesla", "Model Y", "BRU;FLA;WAL"],
+["Premium", "Toyota", "Camry", "BRU;FLA;WAL"],
+["Premium", "Toyota", "Grand Highlander", "BRU;FLA;WAL"],
+["Premium", "Toyota", "Mirai", "BRU;FLA;WAL"],
+["Premium", "Toyota", "bZ4X", "BRU;FLA;WAL"],
+["Premium", "Vinfast", "VF8", "BRU;FLA;WAL"],
+["Premium", "Volkswagen", "Arteon", "BRU;FLA;WAL"],
+["Premium", "Volkswagen", "Arteon Shooting Brake", "BRU;FLA;WAL"],
+["Premium", "Volkswagen", "California", "BRU;FLA;WAL"],
+["Premium", "Volkswagen", "ID.7", "BRU;FLA;WAL"],
+["Premium", "Volkswagen", "Passat CC", "BRU;FLA;WAL"],
+["Premium", "Volkswagen", "Tayron", "BRU;FLA;WAL"],
+["Premium", "Volkswagen", "Transporter Multivan", "BRU;FLA;WAL"],
+["Premium", "Volvo", "S60", "BRU;FLA;WAL"],
+["Premium", "Volvo", "S90", "BRU;FLA;WAL"],
+["Premium", "Volvo", "V60", "BRU;FLA;WAL"],
+["Premium", "Volvo", "V90", "BRU;FLA;WAL"],
+["Premium", "Volvo", "XC60", "BRU;FLA;WAL"],
+["Premium", "Volvo", "XC90", "BRU;FLA;WAL"],
+["Premium", "Xpeng", "G6", "BRU;FLA;WAL"],
+["Premium", "Xpeng", "G9", "BRU;FLA;WAL"],
+["Electric Comfort", "Audi", "Q4 e-tron", "BRU;FLA;WAL"],
+["Electric Comfort", "BYD", "Seal", "BRU;FLA;WAL"],
+["Electric Comfort", "Ford", "Mustang Mach-E", "BRU;FLA;WAL"],
+["Electric Comfort", "Hyundai", "IONIQ 5", "BRU;FLA;WAL"],
+["Electric Comfort", "Hyundai", "IONIQ 6", "BRU;FLA;WAL"],
+["Electric Comfort", "Kia", "EV6", "BRU;FLA;WAL"],
+["Electric Comfort", "MG", "Marvel R", "BRU;FLA;WAL"],
+["Electric Comfort", "Mercedes-Benz", "E300", "BRU;FLA;WAL"],
+["Electric Comfort", "Mercedes-Benz", "EQB", "BRU;FLA;WAL"],
+["Electric Comfort", "Mercedes-Benz", "EQE", "BRU;FLA;WAL"],
+["Electric Comfort", "Mercedes-Benz", "EQS", "BRU;FLA;WAL"],
+["Electric Comfort", "Mercedes-Benz", "EQV", "BRU;FLA;WAL"],
+["Electric Comfort", "Mercedes-Benz", "EQV 300", "BRU;FLA;WAL"],
+["Electric Comfort", "Mercedes-Benz", "e-Vito", "BRU;FLA;WAL"],
+["Electric Comfort", "Mercedes-Benz", "eVito", "BRU;FLA;WAL"],
+["Electric Comfort", "Polestar", "2", "BRU;FLA;WAL"],
+["Electric Comfort", "Skoda", "Enyaq", "BRU;FLA;WAL"],
+["Electric Comfort", "Skoda", "Enyaq iV", "BRU;FLA;WAL"],
+["Electric Comfort", "Tesla", "Model 3", "BRU;FLA;WAL"],
+["Electric Comfort", "Tesla", "Model S", "BRU;FLA;WAL"],
+["Electric Comfort", "Tesla", "Model X", "BRU;FLA;WAL"],
+["Electric Comfort", "Tesla", "Model Y", "BRU;FLA;WAL"],
+["Electric Comfort", "Toyota", "Mirai", "BRU;FLA;WAL"],
+["Electric Comfort", "Toyota", "bZ4X", "BRU;FLA;WAL"],
+["Electric Comfort", "Volkswagen", "ID.4", "BRU;FLA;WAL"],
+["Electric Comfort", "Volkswagen", "ID.5", "BRU;FLA;WAL"],
+["XL", "BMW", "2 series Gran Tourer", "BRU"],
+["XL", "BYD", "Tang", "BRU"],
+["XL", "Chevrolet", "Suburban", "BRU"],
+["XL", "Citroen", "C4 Picasso", "BRU"],
+["XL", "Citroen", "C4 SpaceTourer", "BRU"],
+["XL", "Citroen", "Grand C4 Picasso", "BRU"],
+["XL", "Citroen", "Grand C4 SpaceTourer", "BRU"],
+["XL", "Citroen", "Jumpy", "BRU"],
+["XL", "Citroen", "Spacetourer", "BRU"],
+["XL", "Citroen", "ë-Berlingo", "BRU"],
+["XL", "Citroen", "ë-SpaceTourer", "BRU"],
+["XL", "Dacia", "Jogger", "BRU"],
+["XL", "Fiat", "Scudo", "BRU"],
+["XL", "Fiat", "Talento", "BRU"],
+["XL", "Fiat", "Ulysse", "BRU"],
+["XL", "Ford", "Explorer", "BRU"],
+["XL", "Ford", "Grand C-Max", "BRU"],
+["XL", "Ford", "Grand Tourneo", "BRU"],
+["XL", "Ford", "S-Max", "BRU"],
+["XL", "Ford", "Tourneo", "BRU"],
+["XL", "Ford", "Tourneo Custom", "BRU"],
+["XL", "Ford", "Transit", "BRU"],
+["XL", "Ford", "Transit Connect", "BRU"],
+["XL", "Ford", "Transit Custom", "BRU"],
+["XL", "Hyundai", "SANTAFE", "BRU"],
+["XL", "Hyundai", "Santa Fe", "BRU"],
+["XL", "Hyundai", "Staria", "BRU"],
+["XL", "Kia", "EV9", "BRU"],
+["XL", "Kia", "Sorento", "BRU"],
+["XL", "LEVC", "LEVC TX VISTA COMFORT", "BRU"],
+["XL", "LEVC", "LEVC TX VISTA COMFORT PLUS", "BRU"],
+["XL", "LEVC", "LEVC TXE", "BRU"],
+["XL", "LEVC", "TX", "BRU"],
+["XL", "LEVC", "TX Vista", "BRU"],
+["XL", "Lexus", "RX450hL", "BRU"],
+["XL", "MG", "HS", "BRU"],
+["XL", "Mercedes-Benz", "E-class Limousine", "BRU"],
+["XL", "Mercedes-Benz", "EQB", "BRU"],
+["XL", "Mercedes-Benz", "EQV", "BRU"],
+["XL", "Mercedes-Benz", "EQV 300", "BRU"],
+["XL", "Mercedes-Benz", "GLB", "BRU"],
+["XL", "Mercedes-Benz", "Sprinter", "BRU"],
+["XL", "Mercedes-Benz", "V-Klasse", "BRU"],
+["XL", "Mercedes-Benz", "V-class", "BRU"],
+["XL", "Mercedes-Benz", "V220", "BRU"],
+["XL", "Mercedes-Benz", "V250", "BRU"],
+["XL", "Mercedes-Benz", "V300", "BRU"],
+["XL", "Mercedes-Benz", "VITO TAXI", "BRU"],
+["XL", "Mercedes-Benz", "Viano", "BRU"],
+["XL", "Mercedes-Benz", "Vito", "BRU"],
+["XL", "Mercedes-Benz", "Vito 114", "BRU"],
+["XL", "Mercedes-Benz", "Vito 116", "BRU"],
+["XL", "Mercedes-Benz", "Vito 119", "BRU"],
+["XL", "Mercedes-Benz", "Vito 220", "BRU"],
+["XL", "Mercedes-Benz", "Vito Tourer", "BRU"],
+["XL", "Mercedes-Benz", "e-Vito", "BRU"],
+["XL", "Mercedes-Benz", "eVito", "BRU"],
+["XL", "Mercedes-Benz", "eVito Tourer", "BRU"],
+["XL", "Mitsubishi", "Outlander", "BRU"],
+["XL", "Nissan", "Primastar", "BRU"],
+["XL", "Nissan", "X-Trail", "BRU"],
+["XL", "Opel", "Vivaro", "BRU"],
+["XL", "Opel", "Vivaro-B", "BRU"],
+["XL", "Opel", "Zafira", "BRU"],
+["XL", "Opel", "Zafira-e", "BRU"],
+["XL", "Opel", "vivaro-e", "BRU"],
+["XL", "Peugeot", "5008", "BRU"],
+["XL", "Peugeot", "Expert", "BRU"],
+["XL", "Peugeot", "Expert Eurobus", "BRU"],
+["XL", "Peugeot", "Expert Traveller", "BRU"],
+["XL", "Peugeot", "Traveller", "BRU"],
+["XL", "Peugeot", "e-Rifter", "BRU"],
+["XL", "Peugeot", "e-Traveller", "BRU"],
+["XL", "Renault", "Espace", "BRU"],
+["XL", "Renault", "Grand Espace", "BRU"],
+["XL", "Renault", "Grand Scénic", "BRU"],
+["XL", "Renault", "Trafic", "BRU"],
+["XL", "Seat", "Tarraco", "BRU"],
+["XL", "Tesla", "Model X", "BRU"],
+["XL", "Toyota", "Grand Highlander", "BRU"],
+["XL", "Toyota", "Highlander", "BRU"],
+["XL", "Toyota", "Prius Plus", "BRU"],
+["XL", "Toyota", "ProAce", "BRU"],
+["XL", "Toyota", "ProAce City Verso", "BRU"],
+["XL", "Toyota", "ProAce Verso", "BRU"],
+["XL", "Toyota", "Verso", "BRU"],
+["XL", "Volkswagen", "Caddy", "BRU"],
+["XL", "Volkswagen", "Caddy Maxi", "BRU"],
+["XL", "Volkswagen", "California", "BRU"],
+["XL", "Volkswagen", "Caravelle", "BRU"],
+["XL", "Volkswagen", "ID.Buzz", "BRU"],
+["XL", "Volkswagen", "Kombi", "BRU"],
+["XL", "Volkswagen", "Multivan", "BRU"],
+["XL", "Volkswagen", "Passat Combi", "BRU"],
+["XL", "Volkswagen", "Tiguan", "BRU"],
+["XL", "Volkswagen", "Touran", "BRU"],
+["XL", "Volkswagen", "Transporter", "BRU"],
+["XL", "Volkswagen", "Transporter Kombi", "BRU"],
+["XL", "Volkswagen", "Transporter Multivan", "BRU"],
+["XL", "Volvo", "XC90", "BRU"],
+["Van", "Citroen", "Jumpy", "BRU;FLA;WAL"],
+["Van", "Citroen", "Spacetourer", "BRU;FLA;WAL"],
+["Van", "Citroen", "ë-SpaceTourer", "BRU;FLA;WAL"],
+["Van", "Fiat", "Scudo", "BRU;FLA;WAL"],
+["Van", "Fiat", "Talento", "BRU;FLA;WAL"],
+["Van", "Ford", "Tourneo Custom", "BRU;FLA;WAL"],
+["Van", "Ford", "Transit", "BRU;FLA;WAL"],
+["Van", "Ford", "Transit Custom", "BRU;FLA;WAL"],
+["Van", "Hyundai", "Staria", "BRU;FLA;WAL"],
+["Van", "LEVC", "LEVC TX VISTA COMFORT", "BRU;FLA;WAL"],
+["Van", "LEVC", "LEVC TX VISTA COMFORT PLUS", "BRU;FLA;WAL"],
+["Van", "LEVC", "LEVC TXE", "BRU;FLA;WAL"],
+["Van", "LEVC", "TX", "BRU;FLA;WAL"],
+["Van", "LEVC", "TX Vista", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "EQV", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "EQV 300", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "Sprinter", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "V-Klasse", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "V-class", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "V220", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "V250", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "V300", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "VITO TAXI", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "Viano", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "Vito", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "Vito 114", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "Vito 116", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "Vito 119", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "Vito 220", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "Vito Tourer", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "e-Vito", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "eVito", "BRU;FLA;WAL"],
+["Van", "Mercedes-Benz", "eVito Tourer", "BRU;FLA;WAL"],
+["Van", "Nissan", "Primastar", "BRU;FLA;WAL"],
+["Van", "Opel", "Vivaro", "BRU;FLA;WAL"],
+["Van", "Opel", "Vivaro-B", "BRU;FLA;WAL"],
+["Van", "Opel", "vivaro-e", "BRU;FLA;WAL"],
+["Van", "Peugeot", "Expert", "BRU;FLA;WAL"],
+["Van", "Peugeot", "Expert Eurobus", "BRU;FLA;WAL"],
+["Van", "Peugeot", "Expert Traveller", "BRU;FLA;WAL"],
+["Van", "Peugeot", "Traveller", "BRU;FLA;WAL"],
+["Van", "Peugeot", "e-Traveller", "BRU;FLA;WAL"],
+["Van", "Renault", "Trafic", "BRU;FLA;WAL"],
+["Van", "Toyota", "ProAce", "BRU;FLA;WAL"],
+["Van", "Toyota", "ProAce Verso", "BRU;FLA;WAL"],
+["Van", "Volkswagen", "California", "BRU;FLA;WAL"],
+["Van", "Volkswagen", "Caravelle", "BRU;FLA;WAL"],
+["Van", "Volkswagen", "ID.Buzz", "BRU;FLA;WAL"],
+["Van", "Volkswagen", "Kombi", "BRU;FLA;WAL"],
+["Van", "Volkswagen", "Multivan", "BRU;FLA;WAL"],
+["Van", "Volkswagen", "Transporter", "BRU;FLA;WAL"],
+["Van", "Volkswagen", "Transporter Kombi", "BRU;FLA;WAL"],
+["Van", "Volkswagen", "Transporter Multivan", "BRU;FLA;WAL"]
+];
+
+var REGIONS = {
+  bruxelles:{
+    code:"BRU", age:"2018+", xlOnly:false,
+    notes:{"XL":"xl","Van":"van"},
+    cats:["Comfort","Premium","Electric Comfort","XL","Van"],
+},
+  flandre:{
+    code:"FLA", age:"2018+", xlOnly:true, /* à partir de janvier 2027 : age:10 */
+    notes:{"Van":"van"},
+    cats:["Comfort","Premium","Electric Comfort","Van"],
+},
+  wallonie:{
+    code:"WAL", age:"2018+", xlOnly:true, /* à partir de janvier 2027 : age:5 */
+    notes:{"Van":"van"},
+    cats:["Comfort","Premium","Electric Comfort","Van"],
+}
+};
+
+var T = {
+  fr:{
+    htmlLang:"fr-BE", notice:"Cette liste s’applique à partir du 25 novembre 2026. Jusqu’à cette date, la liste actuelle reste en vigueur.", title:"Bolt Belgique — Véhicules éligibles", headerSub:"Véhicules éligibles",
+    pageSub:"Consultez la liste des véhicules éligibles par catégorie",
+    placeholder:"Rechercher un véhicule ou une marque...", all:"Toutes",
+    regions:{bruxelles:"Bruxelles",flandre:"Flandre",wallonie:"Wallonie"},
+    xlOnly:"La catégorie XL est disponible uniquement à Bruxelles.",
+    maxYears:function(n){return n+" ans max";},
+    notes:{
+      xl:"Capacité : 6 passagers sans bagages, ou 4 passagers avec bagages.\nÂge maximum du véhicule : 7 ans.",
+      van:"Pour la catégorie Van, le véhicule doit pouvoir accueillir 6 passagers et 6 bagages.\nÂge maximum du véhicule : 7 ans."
+    },
+    stats:function(v,b){return "<strong>"+v+"</strong> véhicules dans <strong>"+b+"</strong> marques";},
+    models:function(n){return n+" modèle"+(n>1?"s":"");},
+    resultsIn:function(n){return n+" résultat"+(n>1?"s":"");},
+    resultsFor:function(n,q){return "<strong>"+n+"</strong> résultat"+(n>1?"s":"")+" pour « "+esc(q)+" »";},
+    none:function(q){return "Aucun résultat pour « "+esc(q)+" »";}
+  },
+  en:{
+    htmlLang:"en", notice:"This list applies from 25 November 2026. Until then, the current list remains in force.", title:"Bolt Belgium — Eligible vehicles", headerSub:"Eligible vehicles",
+    pageSub:"Browse the list of eligible vehicles by category",
+    placeholder:"Search for a vehicle or brand...", all:"All",
+    regions:{bruxelles:"Brussels",flandre:"Flanders",wallonie:"Wallonia"},
+    xlOnly:"The XL category is only available in Brussels.",
+    maxYears:function(n){return "max. "+n+" years";},
+    notes:{
+      xl:"Capacity: 6 passengers without luggage, or 4 passengers with luggage.\nMaximum vehicle age: 7 years.",
+      van:"For the Van category, the vehicle must be able to carry 6 passengers and 6 pieces of luggage.\nMaximum vehicle age: 7 years."
+    },
+    stats:function(v,b){return "<strong>"+v+"</strong> vehicles from <strong>"+b+"</strong> brands";},
+    models:function(n){return n+" model"+(n>1?"s":"");},
+    resultsIn:function(n){return n+" result"+(n!==1?"s":"");},
+    resultsFor:function(n,q){return "<strong>"+n+"</strong> result"+(n!==1?"s":"")+" for “"+esc(q)+"”";},
+    none:function(q){return "No results for “"+esc(q)+"”";}
+  },
+  nl:{
+    htmlLang:"nl-BE", notice:"Deze lijst geldt vanaf 25 november 2026. Tot die datum blijft de huidige lijst van kracht.", title:"Bolt België — Geschikte voertuigen", headerSub:"Geschikte voertuigen",
+    pageSub:"Bekijk de lijst met geschikte voertuigen per categorie",
+    placeholder:"Zoek een voertuig of merk...", all:"Alle",
+    regions:{bruxelles:"Brussel",flandre:"Vlaanderen",wallonie:"Wallonië"},
+    xlOnly:"De categorie XL is alleen beschikbaar in Brussel.",
+    maxYears:function(n){return "max. "+n+" jaar";},
+    notes:{
+      xl:"Capaciteit: 6 passagiers zonder bagage, of 4 passagiers met bagage.\nMaximumleeftijd van het voertuig: 7 jaar.",
+      van:"Voor de categorie Van moet het voertuig plaats bieden aan 6 passagiers en 6 stuks bagage.\nMaximumleeftijd van het voertuig: 7 jaar."
+    },
+    stats:function(v,b){return "<strong>"+v+"</strong> voertuigen van <strong>"+b+"</strong> merken";},
+    models:function(n){return n+" "+(n>1?"modellen":"model");},
+    resultsIn:function(n){return n+" "+(n!==1?"resultaten":"resultaat");},
+    resultsFor:function(n,q){return "<strong>"+n+"</strong> "+(n!==1?"resultaten":"resultaat")+" voor “"+esc(q)+"”";},
+    none:function(q){return "Geen resultaten voor “"+esc(q)+"”";}
+  }
+};
+var LANGS = ["fr","en","nl"];
+
+var lang = "fr";
+var region = "bruxelles";
+var CAT_ORDER = [];
+var activeCat = -1;
+var data = {};
+
+function tr(){return T[lang];}
+function lab(c){
+  if(c!=="Comfort"&&c!=="Premium")return c;
+  var a=REGIONS[region].age;
+  return c+" ("+(typeof a==="number"?tr().maxYears(a):a)+")";
+}
+function catNote(c){var k=REGIONS[region].notes[c];return k?tr().notes[k]:"";}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function hi(s,q){if(!q)return esc(s);return esc(s).replace(new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi"),"<mark>$1</mark>");}
+function countCat(c){var t=0,bs=Object.keys(data[c]||{});for(var i=0;i<bs.length;i++)t+=data[c][bs[i]].length;return t;}
+function allIdx(){var a=[];for(var i=0;i<CAT_ORDER.length;i++)a.push(i);return a;}
+function getMerged(idxList){
+  var merged={};
+  for(var i=0;i<idxList.length;i++){
+    var c=CAT_ORDER[idxList[i]];if(!data[c])continue;
+    var bs=Object.keys(data[c]);
+    for(var j=0;j<bs.length;j++){
+      var b=bs[j];if(!merged[b])merged[b]={};
+      var ms=data[c][b];for(var k=0;k<ms.length;k++)merged[b][ms[k]]=true;
+    }
+  }
+  return merged;
+}
+function applyStaticText(){
+  document.title=tr().title;
+  try{document.documentElement.lang=tr().htmlLang;}catch(e){}
+  document.getElementById("headerSub").textContent=tr().headerSub;
+  document.getElementById("dateNotice").textContent=(new Date()<new Date(2026,10,25))?tr().notice:"";
+  document.getElementById("pageSub").textContent=tr().pageSub;
+  document.getElementById("searchInput").placeholder=tr().placeholder;
+}
+function renderLangs(){
+  var html="";
+  for(var i=0;i<LANGS.length;i++){
+    var l=LANGS[i];
+    html+="<button class=\"lang-btn"+(l===lang?" active":"")+"\" onclick=\"selectLang('"+l+"')\">"+l.toUpperCase()+"</button>";
+  }
+  document.getElementById("langSwitch").innerHTML=html;
+}
+function renderRegions(){
+  var html="";
+  for(var key in REGIONS){
+    html+="<button class=\"region-btn"+(key===region?" active":"")+"\" onclick=\"selectRegion('"+key+"')\">"+esc(tr().regions[key])+"</button>";
+  }
+  document.getElementById("regionSwitch").innerHTML=html;
+  document.getElementById("regionNote").textContent=REGIONS[region].xlOnly?tr().xlOnly:"";
+}
+function renderTabs(){
+  var totalAll=0;for(var i=0;i<CAT_ORDER.length;i++)totalAll+=countCat(CAT_ORDER[i]);
+  var html="<button class=\"cat-tab"+(activeCat===-1?" active":"")+"\" onclick=\"selectCat(-1)\">"+esc(tr().all)+" <span class=\"count\">"+totalAll+"</span></button>";
+  for(var i=0;i<CAT_ORDER.length;i++){
+    var c=CAT_ORDER[i];
+    html+="<button class=\"cat-tab"+(activeCat===i?" active":"")+"\" onclick=\"selectCat("+i+")\">"+esc(lab(c))+" <span class=\"count\">"+countCat(c)+"</span></button>";
+  }
+  document.getElementById("catTabs").innerHTML=html;
+}
+function renderBrands(){
+  var idxList=activeCat===-1?allIdx():[activeCat];
+  var merged=getMerged(idxList);
+  var brands=Object.keys(merged).sort();
+  var total=0;for(var i=0;i<brands.length;i++)total+=Object.keys(merged[brands[i]]).length;
+  document.getElementById("catNote").textContent=activeCat>=0?catNote(CAT_ORDER[activeCat]):"";
+  document.getElementById("statsLine").innerHTML=tr().stats(total,brands.length);
+  var html="";
+  for(var i=0;i<brands.length;i++){
+    var b=brands[i],models=Object.keys(merged[b]).sort();
+    html+="<div class=\"brand-row\"><div class=\"brand-header\" onclick=\"this.closest('.brand-row').classList.toggle('open')\">";
+    html+="<span class=\"brand-name\">"+esc(b)+"</span>";
+    html+="<div class=\"brand-right\"><span class=\"brand-count\">"+tr().models(models.length)+"</span><span class=\"brand-chevron\">▼</span></div>";
+    html+="</div><div class=\"models-list\">";
+    for(var j=0;j<models.length;j++)html+="<div class=\"model-item\">"+esc(models[j])+"</div>";
+    html+="</div></div>";
+  }
+  document.getElementById("brandsGrid").innerHTML=html;
+}
+function selectCat(idx){activeCat=idx;renderTabs();renderBrands();}
+function runSearch(){
+  var q=document.getElementById("searchInput").value.trim();
+  var normal=document.getElementById("normalView");
+  var sr=document.getElementById("searchResults");
+  if(!q){normal.style.display="block";sr.style.display="none";return;}
+  normal.style.display="none";sr.style.display="block";
+  var ql=q.toLowerCase(),html="",total=0;
+  for(var ci=0;ci<CAT_ORDER.length;ci++){
+    var cat=CAT_ORDER[ci],items=[],brands=Object.keys(data[cat]||{}).sort();
+    for(var bi=0;bi<brands.length;bi++){
+      var b=brands[bi],models=data[cat][b];
+      for(var mi=0;mi<models.length;mi++){
+        var m=models[mi];
+        if((b+" "+m).toLowerCase().indexOf(ql)!==-1)items.push({b:b,m:m});
+      }
+    }
+    if(!items.length)continue;
+    total+=items.length;
+    html+="<div class=\"search-result-group\"><div class=\"result-group-title\">"+esc(lab(cat))+" — "+tr().resultsIn(items.length)+"</div>"+(catNote(cat)?"<div class=\"cat-note\">"+esc(catNote(cat))+"</div>":"")+"<div class=\"result-cards\">";
+    for(var ii=0;ii<items.length;ii++)html+="<div class=\"result-card\"><div class=\"result-brand\">"+hi(items[ii].b,q)+"</div>"+hi(items[ii].m,q)+"</div>";
+    html+="</div></div>";
+  }
+  sr.innerHTML="<div class=\"stats-line\" style=\"margin-bottom:20px\">"+tr().resultsFor(total,q)+"</div>"+(html||"<div class=\"empty\">"+tr().none(q)+"</div>");
+}
+function loadRegion(key){
+  region=key;
+  var r=REGIONS[key];
+  CAT_ORDER=r.cats;activeCat=-1;data={};
+  var rows=ROWS.filter(function(x){return x[3].split(";").indexOf(r.code)>-1;});
+  for(var i=0;i<rows.length;i++){
+    var c=rows[i][0],b=rows[i][1],m=rows[i][2];
+    if(!data[c])data[c]={};
+    if(!data[c][b])data[c][b]=[];
+    if(data[c][b].indexOf(m)===-1)data[c][b].push(m);
+  }
+  renderRegions();renderTabs();renderBrands();runSearch();
+}
+function updateHash(){try{history.replaceState(null,"","#"+region+"-"+lang);}catch(e){}}
+function selectRegion(key){loadRegion(key);updateHash();}
+function selectLang(l){
+  lang=l;
+  try{localStorage.setItem("bolt-lang",l);}catch(e){}
+  applyStaticText();renderLangs();renderRegions();renderTabs();renderBrands();runSearch();
+  updateHash();
+}
+function parseHash(){
+  var p=(location.hash||"").replace("#","").split("-");
+  return {region:REGIONS[p[0]]?p[0]:null, lang:T[p[1]]?p[1]:null};
+}
+function initialLang(){
+  var h=parseHash().lang;if(h)return h;
+  try{var s=localStorage.getItem("bolt-lang");if(T[s])return s;}catch(e){}
+  var n=((typeof navigator!=="undefined"&&navigator.language)||"fr").slice(0,2).toLowerCase();
+  return T[n]?n:"fr";
+}
+function applyHash(){
+  var h=parseHash();
+  if(h.lang)lang=h.lang;
+  applyStaticText();renderLangs();
+  loadRegion(h.region||"bruxelles");
+}
+document.getElementById("searchInput").addEventListener("input",runSearch);
+window.addEventListener("hashchange",applyHash);
+lang=initialLang();
+applyHash();
+</script>
+</body>
+</html>
