@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr-BE">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bolt Belgique — Véhicules éligibles</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap');
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--green:#2A9C64;--dark:#1A1A2E;--mid:#6B7280;--light:#F5F5F7;--border:#E5E7EB;--white:#fff}
+  body{font-family:"DM Sans",sans-serif;background:var(--light);color:var(--dark);min-height:100vh}
+  header{background:var(--white);border-bottom:1px solid var(--border);padding:20px 40px;display:flex;align-items:center;gap:16px}
+  .logo{display:block;height:28px;width:auto}
+  .header-sub{font-size:14px;color:var(--mid);border-left:1px solid var(--border);padding-left:16px;margin-left:4px}
+  .container{max-width:1100px;margin:0 auto;padding:32px 24px}
+  .page-sub{font-size:14px;color:var(--mid);margin-bottom:24px}
+  .lang-switch{margin-left:auto;display:flex;gap:4px}
+  .lang-btn{padding:6px 10px;border:1.5px solid var(--border);background:var(--white);border-radius:8px;font-family:"DM Sans",sans-serif;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--mid);cursor:pointer;transition:all .15s}
+  .lang-btn:hover{color:var(--dark);border-color:#aaa}
+  .lang-btn.active{background:var(--dark);border-color:var(--dark);color:var(--white)}
+  .lang-btn:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+  .notice{background:var(--white);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:10px;padding:12px 14px;font-size:14px;line-height:1.5;color:var(--dark);margin-bottom:20px}
+  .notice:empty{display:none}
+  .region-switch{display:inline-flex;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:4px;gap:4px;margin-bottom:16px}
+  .region-btn{padding:9px 18px;border:0;border-radius:9px;background:transparent;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:500;color:var(--mid);cursor:pointer;transition:all .15s;white-space:nowrap}
+  .region-btn:hover{color:var(--dark)}
+  .region-btn.active{background:var(--dark);color:var(--white)}
+  .region-btn:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+  .region-note{font-size:13px;color:var(--mid);margin-bottom:20px}
+  .region-note:empty{display:none}
+  .search-wrap{position:relative;margin-bottom:24px}
+  .search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--mid)}
+  #searchInput{width:100%;padding:13px 16px 13px 44px;border:1.5px solid var(--border);border-radius:12px;font-family:"DM Sans",sans-serif;font-size:15px;background:var(--white);outline:none;transition:border-color .2s}
+  #searchInput:focus{border-color:var(--green)}
+  .cat-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+  .cat-tab{padding:8px 16px;border-radius:40px;border:1.5px solid var(--border);background:var(--white);font-family:"DM Sans",sans-serif;font-size:13px;font-weight:500;color:var(--mid);cursor:pointer;transition:all .15s;white-space:nowrap}
+  .cat-tab:hover{border-color:#aaa;color:var(--dark)}
+  .cat-tab.active{background:var(--green);border-color:var(--green);color:var(--white)}
+  .cat-tab .count{font-size:11px;opacity:.8;font-weight:400;margin-left:4px}
+  .cat-note{white-space:pre-line;background:var(--white);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.5;color:var(--dark);margin-bottom:16px}
+  .cat-note:empty{display:none}
+  .stats-line{font-size:13px;color:var(--mid);margin-bottom:16px}
+  .stats-line strong{color:var(--dark)}
+  .brands-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .brand-row{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .brand-header{padding:14px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .12s}
+  .brand-header:hover{background:#FAFAFA}
+  .brand-name{font-size:14px;font-weight:600;color:var(--dark)}
+  .brand-right{display:flex;align-items:center;gap:8px}
+  .brand-count{font-size:11px;color:var(--mid);background:var(--light);padding:2px 8px;border-radius:20px;white-space:nowrap}
+  .brand-chevron{color:#CBD5E0;font-size:11px;transition:transform .2s}
+  .brand-row.open .brand-chevron{transform:rotate(180deg)}
+  .models-list{display:none;border-top:1px solid var(--border);padding:8px 0}
+  .brand-row.open .models-list{display:block}
+  .model-item{padding:6px 16px;font-size:13px;color:var(--mid)}
+  .model-item:hover{background:var(--light);color:var(--dark)}
+  .search-results{display:none}
+  .search-result-group{margin-bottom:28px}
+  .result-group-title{font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  .result-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+  .result-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--dark)}
+  .result-brand{font-size:10px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+  .empty{text-align:center;padding:60px 20px;color:var(--mid);font-size:14px;line-height:1.8}
+  mark{background:#FFF3CD;border-radius:3px;padding:0 2px}
+  @media(max-width:768px){.brands-grid{grid-template-columns:repeat(2,1fr)}header{padding:16px 20px}.container{padding:20px 16px}}
+  @media(max-width:480px){.brands-grid{grid-template-columns:1fr}.region-switch{display:flex}.region-btn{flex:1;padding:9px 10px}}
+</style>
+</head>
+<body>
+<header>
+  <img class="logo" src="data:image/png;base64,/*LOGO_B64*/" alt="Bolt" width="48" height="28">
+  <div class="header-sub" id="headerSub">Véhicules éligibles</div>
+  <div class="lang-switch" id="langSwitch"></div>
+</header>
+<div class="container">
+  <p class="page-sub" id="pageSub">Consultez la liste des véhicules éligibles par catégorie</p>
+  <div class="notice" id="dateNotice"></div>
+  <div class="region-switch" id="regionSwitch"></div>
+  <p class="region-note" id="regionNote"></p>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Rechercher un véhicule ou une marque..." autocomplete="off">
+  </div>
+  <div id="normalView">
+    <div class="cat-tabs" id="catTabs"></div>
+    <div class="cat-note" id="catNote"></div>
+    <div class="stats-line" id="statsLine"></div>
+    <div class="brands-grid" id="brandsGrid"></div>
+  </div>
+  <div class="search-results" id="searchResults"></div>
+</div>
+<script>
+// Données : générées depuis vehicles.csv par generate.py (colonne Zones : BRU, FLA, WAL)
+var ROWS = [
+/*ROWS*/
+];
+
+var REGIONS = {
+  bruxelles:{
+    code:"BRU", age:"2018+", xlOnly:false,
+    notes:{"XL":"xl","Van":"van"},
+    cats:["Comfort","Premium","Electric Comfort","XL","Van"],
+},
+  flandre:{
+    code:"FLA", age:"2018+", xlOnly:true, /* à partir de janvier 2027 : age:10 */
+    notes:{"Van":"van"},
+    cats:["Comfort","Premium","Electric Comfort","Van"],
+},
+  wallonie:{
+    code:"WAL", age:"2018+", xlOnly:true, /* à partir de janvier 2027 : age:5 */
+    notes:{"Van":"van"},
+    cats:["Comfort","Premium","Electric Comfort","Van"],
+}
+};
+
+var T = {
+  fr:{
+    htmlLang:"fr-BE", notice:"Cette liste s’applique à partir du 25 novembre 2026. Jusqu’à cette date, la liste actuelle reste en vigueur.", title:"Bolt Belgique — Véhicules éligibles", headerSub:"Véhicules éligibles",
+    pageSub:"Consultez la liste des véhicules éligibles par catégorie",
+    placeholder:"Rechercher un véhicule ou une marque...", all:"Toutes",
+    regions:{bruxelles:"Bruxelles",flandre:"Flandre",wallonie:"Wallonie"},
+    xlOnly:"La catégorie XL est disponible uniquement à Bruxelles.",
+    maxYears:function(n){return n+" ans max";},
+    notes:{
+      xl:"Capacité : 6 passagers sans bagages, ou 4 passagers avec bagages.\nÂge maximum du véhicule : 7 ans.",
+      van:"Pour la catégorie Van, le véhicule doit pouvoir accueillir 6 passagers et 6 bagages.\nÂge maximum du véhicule : 7 ans."
+    },
+    stats:function(v,b){return "<strong>"+v+"</strong> véhicules dans <strong>"+b+"</strong> marques";},
+    models:function(n){return n+" modèle"+(n>1?"s":"");},
+    resultsIn:function(n){return n+" résultat"+(n>1?"s":"");},
+    resultsFor:function(n,q){return "<strong>"+n+"</strong> résultat"+(n>1?"s":"")+" pour « "+esc(q)+" »";},
+    none:function(q){return "Aucun résultat pour « "+esc(q)+" »";}
+  },
+  en:{
+    htmlLang:"en", notice:"This list applies from 25 November 2026. Until then, the current list remains in force.", title:"Bolt Belgium — Eligible vehicles", headerSub:"Eligible vehicles",
+    pageSub:"Browse the list of eligible vehicles by category",
+    placeholder:"Search for a vehicle or brand...", all:"All",
+    regions:{bruxelles:"Brussels",flandre:"Flanders",wallonie:"Wallonia"},
+    xlOnly:"The XL category is only available in Brussels.",
+    maxYears:function(n){return "max. "+n+" years";},
+    notes:{
+      xl:"Capacity: 6 passengers without luggage, or 4 passengers with luggage.\nMaximum vehicle age: 7 years.",
+      van:"For the Van category, the vehicle must be able to carry 6 passengers and 6 pieces of luggage.\nMaximum vehicle age: 7 years."
+    },
+    stats:function(v,b){return "<strong>"+v+"</strong> vehicles from <strong>"+b+"</strong> brands";},
+    models:function(n){return n+" model"+(n>1?"s":"");},
+    resultsIn:function(n){return n+" result"+(n!==1?"s":"");},
+    resultsFor:function(n,q){return "<strong>"+n+"</strong> result"+(n!==1?"s":"")+" for “"+esc(q)+"”";},
+    none:function(q){return "No results for “"+esc(q)+"”";}
+  },
+  nl:{
+    htmlLang:"nl-BE", notice:"Deze lijst geldt vanaf 25 november 2026. Tot die datum blijft de huidige lijst van kracht.", title:"Bolt België — Geschikte voertuigen", headerSub:"Geschikte voertuigen",
+    pageSub:"Bekijk de lijst met geschikte voertuigen per categorie",
+    placeholder:"Zoek een voertuig of merk...", all:"Alle",
+    regions:{bruxelles:"Brussel",flandre:"Vlaanderen",wallonie:"Wallonië"},
+    xlOnly:"De categorie XL is alleen beschikbaar in Brussel.",
+    maxYears:function(n){return "max. "+n+" jaar";},
+    notes:{
+      xl:"Capaciteit: 6 passagiers zonder bagage, of 4 passagiers met bagage.\nMaximumleeftijd van het voertuig: 7 jaar.",
+      van:"Voor de categorie Van moet het voertuig plaats bieden aan 6 passagiers en 6 stuks bagage.\nMaximumleeftijd van het voertuig: 7 jaar."
+    },
+    stats:function(v,b){return "<strong>"+v+"</strong> voertuigen van <strong>"+b+"</strong> merken";},
+    models:function(n){return n+" "+(n>1?"modellen":"model");},
+    resultsIn:function(n){return n+" "+(n!==1?"resultaten":"resultaat");},
+    resultsFor:function(n,q){return "<strong>"+n+"</strong> "+(n!==1?"resultaten":"resultaat")+" voor “"+esc(q)+"”";},
+    none:function(q){return "Geen resultaten voor “"+esc(q)+"”";}
+  }
+};
+var LANGS = ["fr","en","nl"];
+
+var lang = "fr";
+var region = "bruxelles";
+var CAT_ORDER = [];
+var activeCat = -1;
+var data = {};
+
+function tr(){return T[lang];}
+function lab(c){
+  if(c!=="Comfort"&&c!=="Premium")return c;
+  var a=REGIONS[region].age;
+  return c+" ("+(typeof a==="number"?tr().maxYears(a):a)+")";
+}
+function catNote(c){var k=REGIONS[region].notes[c];return k?tr().notes[k]:"";}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function hi(s,q){if(!q)return esc(s);return esc(s).replace(new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi"),"<mark>$1</mark>");}
+function countCat(c){var t=0,bs=Object.keys(data[c]||{});for(var i=0;i<bs.length;i++)t+=data[c][bs[i]].length;return t;}
+function allIdx(){var a=[];for(var i=0;i<CAT_ORDER.length;i++)a.push(i);return a;}
+function getMerged(idxList){
+  var merged={};
+  for(var i=0;i<idxList.length;i++){
+    var c=CAT_ORDER[idxList[i]];if(!data[c])continue;
+    var bs=Object.keys(data[c]);
+    for(var j=0;j<bs.length;j++){
+      var b=bs[j];if(!merged[b])merged[b]={};
+      var ms=data[c][b];for(var k=0;k<ms.length;k++)merged[b][ms[k]]=true;
+    }
+  }
+  return merged;
+}
+function applyStaticText(){
+  document.title=tr().title;
+  try{document.documentElement.lang=tr().htmlLang;}catch(e){}
+  document.getElementById("headerSub").textContent=tr().headerSub;
+  document.getElementById("dateNotice").textContent=(new Date()<new Date(2026,10,25))?tr().notice:"";
+  document.getElementById("pageSub").textContent=tr().pageSub;
+  document.getElementById("searchInput").placeholder=tr().placeholder;
+}
+function renderLangs(){
+  var html="";
+  for(var i=0;i<LANGS.length;i++){
+    var l=LANGS[i];
+    html+="<button class=\"lang-btn"+(l===lang?" active":"")+"\" onclick=\"selectLang('"+l+"')\">"+l.toUpperCase()+"</button>";
+  }
+  document.getElementById("langSwitch").innerHTML=html;
+}
+function renderRegions(){
+  var html="";
+  for(var key in REGIONS){
+    html+="<button class=\"region-btn"+(key===region?" active":"")+"\" onclick=\"selectRegion('"+key+"')\">"+esc(tr().regions[key])+"</button>";
+  }
+  document.getElementById("regionSwitch").innerHTML=html;
+  document.getElementById("regionNote").textContent=REGIONS[region].xlOnly?tr().xlOnly:"";
+}
+function renderTabs(){
+  var totalAll=0;for(var i=0;i<CAT_ORDER.length;i++)totalAll+=countCat(CAT_ORDER[i]);
+  var html="<button class=\"cat-tab"+(activeCat===-1?" active":"")+"\" onclick=\"selectCat(-1)\">"+esc(tr().all)+" <span class=\"count\">"+totalAll+"</span></button>";
+  for(var i=0;i<CAT_ORDER.length;i++){
+    var c=CAT_ORDER[i];
+    html+="<button class=\"cat-tab"+(activeCat===i?" active":"")+"\" onclick=\"selectCat("+i+")\">"+esc(lab(c))+" <span class=\"count\">"+countCat(c)+"</span></button>";
+  }
+  document.getElementById("catTabs").innerHTML=html;
+}
+function renderBrands(){
+  var idxList=activeCat===-1?allIdx():[activeCat];
+  var merged=getMerged(idxList);
+  var brands=Object.keys(merged).sort();
+  var total=0;for(var i=0;i<brands.length;i++)total+=Object.keys(merged[brands[i]]).length;
+  document.getElementById("catNote").textContent=activeCat>=0?catNote(CAT_ORDER[activeCat]):"";
+  document.getElementById("statsLine").innerHTML=tr().stats(total,brands.length);
+  var html="";
+  for(var i=0;i<brands.length;i++){
+    var b=brands[i],models=Object.keys(merged[b]).sort();
+    html+="<div class=\"brand-row\"><div class=\"brand-header\" onclick=\"this.closest('.brand-row').classList.toggle('open')\">";
+    html+="<span class=\"brand-name\">"+esc(b)+"</span>";
+    html+="<div class=\"brand-right\"><span class=\"brand-count\">"+tr().models(models.length)+"</span><span class=\"brand-chevron\">▼</span></div>";
+    html+="</div><div class=\"models-list\">";
+    for(var j=0;j<models.length;j++)html+="<div class=\"model-item\">"+esc(models[j])+"</div>";
+    html+="</div></div>";
+  }
+  document.getElementById("brandsGrid").innerHTML=html;
+}
+function selectCat(idx){activeCat=idx;renderTabs();renderBrands();}
+function runSearch(){
+  var q=document.getElementById("searchInput").value.trim();
+  var normal=document.getElementById("normalView");
+  var sr=document.getElementById("searchResults");
+  if(!q){normal.style.display="block";sr.style.display="none";return;}
+  normal.style.display="none";sr.style.display="block";
+  var ql=q.toLowerCase(),html="",total=0;
+  for(var ci=0;ci<CAT_ORDER.length;ci++){
+    var cat=CAT_ORDER[ci],items=[],brands=Object.keys(data[cat]||{}).sort();
+    for(var bi=0;bi<brands.length;bi++){
+      var b=brands[bi],models=data[cat][b];
+      for(var mi=0;mi<models.length;mi++){
+        var m=models[mi];
+        if((b+" "+m).toLowerCase().indexOf(ql)!==-1)items.push({b:b,m:m});
+      }
+    }
+    if(!items.length)continue;
+    total+=items.length;
+    html+="<div class=\"search-result-group\"><div class=\"result-group-title\">"+esc(lab(cat))+" — "+tr().resultsIn(items.length)+"</div>"+(catNote(cat)?"<div class=\"cat-note\">"+esc(catNote(cat))+"</div>":"")+"<div class=\"result-cards\">";
+    for(var ii=0;ii<items.length;ii++)html+="<div class=\"result-card\"><div class=\"result-brand\">"+hi(items[ii].b,q)+"</div>"+hi(items[ii].m,q)+"</div>";
+    html+="</div></div>";
+  }
+  sr.innerHTML="<div class=\"stats-line\" style=\"margin-bottom:20px\">"+tr().resultsFor(total,q)+"</div>"+(html||"<div class=\"empty\">"+tr().none(q)+"</div>");
+}
+function loadRegion(key){
+  region=key;
+  var r=REGIONS[key];
+  CAT_ORDER=r.cats;activeCat=-1;data={};
+  var rows=ROWS.filter(function(x){return x[3].split(";").indexOf(r.code)>-1;});
+  for(var i=0;i<rows.length;i++){
+    var c=rows[i][0],b=rows[i][1],m=rows[i][2];
+    if(!data[c])data[c]={};
+    if(!data[c][b])data[c][b]=[];
+    if(data[c][b].indexOf(m)===-1)data[c][b].push(m);
+  }
+  renderRegions();renderTabs();renderBrands();runSearch();
+}
+function updateHash(){try{history.replaceState(null,"","#"+region+"-"+lang);}catch(e){}}
+function selectRegion(key){loadRegion(key);updateHash();}
+function selectLang(l){
+  lang=l;
+  try{localStorage.setItem("bolt-lang",l);}catch(e){}
+  applyStaticText();renderLangs();renderRegions();renderTabs();renderBrands();runSearch();
+  updateHash();
+}
+function parseHash(){
+  var p=(location.hash||"").replace("#","").split("-");
+  return {region:REGIONS[p[0]]?p[0]:null, lang:T[p[1]]?p[1]:null};
+}
+function initialLang(){
+  var h=parseHash().lang;if(h)return h;
+  try{var s=localStorage.getItem("bolt-lang");if(T[s])return s;}catch(e){}
+  var n=((typeof navigator!=="undefined"&&navigator.language)||"fr").slice(0,2).toLowerCase();
+  return T[n]?n:"fr";
+}
+function applyHash(){
+  var h=parseHash();
+  if(h.lang)lang=h.lang;
+  applyStaticText();renderLangs();
+  loadRegion(h.region||"bruxelles");
+}
+document.getElementById("searchInput").addEventListener("input",runSearch);
+window.addEventListener("hashchange",applyHash);
+lang=initialLang();
+applyHash();
+</script>
+</body>
+</html>
